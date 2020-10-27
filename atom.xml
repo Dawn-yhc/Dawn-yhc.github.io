@@ -38,6 +38,27 @@
   </entry>
   
   <entry>
+    <title>Hxeo 写一篇博客的具体细节</title>
+    <link href="https://yuhaicheng.xyz/9.html"/>
+    <id>https://yuhaicheng.xyz/9.html</id>
+    <published>2020-10-23T15:04:05.000Z</published>
+    <updated>2020-10-23T15:04:05.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="以我用的Next主题为例"><a href="#以我用的Next主题为例" class="headerlink" title="以我用的Next主题为例"></a>以我用的Next主题为例</h1><p>一篇博客头写的内容</p><ul><li>toc: true  目录是否生成</li><li>comments: true  评论是否开启</li><li>sticky: 100  数值越大，置顶，相同取第一个写的</li><li>tags: - Next 标签名字</li><li>categories: - Hexo  分类名字</li><li>description: - 描述，一篇博客，不点开，只能看到题目+这个描述  </li><li>date: 2020-10-23 23:04:05  时间</li><li>updated: 2020-10-23 23:04:05    更新时间</li></ul>]]></content>
+    
+    
+    <summary type="html">分类 标签 描述的写法</summary>
+    
+    
+    
+    <category term="Hexo" scheme="https://yuhaicheng.xyz/categories/Hexo/"/>
+    
+    
+    <category term="Next" scheme="https://yuhaicheng.xyz/tags/Next/"/>
+    
+  </entry>
+  
+  <entry>
     <title>第一天线下笔试</title>
     <link href="https://yuhaicheng.xyz/%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8B%E9%9D%A2%E8%AF%95.html"/>
     <id>https://yuhaicheng.xyz/%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8B%E9%9D%A2%E8%AF%95.html</id>
