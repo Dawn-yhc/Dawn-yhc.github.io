@@ -392,14 +392,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>14k</span>
+      <span>15k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>12 分钟</span>
+      <span>14 分钟</span>
     </span>
 </div>
 
@@ -426,51 +426,41 @@
 <p>最后帮我总结了一下，说我刚开始的框架知识给他的印象很差，但后来的基础知识答得很好，可以用自己得理解来答，希望你能好好看自己得框架部分，注意细节。---end---</p>
 <h3 id="解答：以下答案是我后自己总结的，面试时答的都是自己理解答得，我认为框架这我有点菜"><a href="#解答：以下答案是我后自己总结的，面试时答的都是自己理解答得，我认为框架这我有点菜" class="headerlink" title="解答：以下答案是我后自己总结的，面试时答的都是自己理解答得，我认为框架这我有点菜..."></a>解答：以下答案是我后自己总结的，面试时答的都是自己理解答得，我认为框架这我有点菜...</h3><p><strong>①首先我用工具建立了一个web工程、导入ssm框架得jar包、配置对应得xml文件、写demo测试，没问题了就可以开发了。</strong></p>
 <p>细节：</p>
-<p>（对应得xml文件主要有applicationContext.xml、spring-mvc.xml、mybatis-config.xml文件；applicationContext.xml文件主要是<br>a、配置注解扫描范围</p>
-<pre><code>    &lt;context:component-scan base-package=&quot;com.haina.ssmbicycle&quot; /&gt;</code></pre>
-<p>b、引用数据库配置文件</p>
-<pre><code>    &lt;context:property-placeholder location=&quot;classpath:jdbc.properties&quot; /&gt;</code></pre>
-<p>c、配置数据源（</p>
-<pre><code>&lt;bean id=&quot;pooledDateSource&quot;class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;</code></pre>
-<p>d、配置MyBatis的SqlSessionFactory，他是单个数据库映射关系经过编译后的内存镜像</p>
-<pre><code>    &lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
-    &lt;property name=&quot;configLocation&quot; value=&quot;classpath:mybatis-config.xml&quot;/&gt;&lt;!-- 配置mybatis全局配置文件 --&gt; 
-    &lt;property name=&quot;dataSource&quot; ref=&quot;pooledDateSource&quot;/&gt;
-    &lt;property name=&quot;mapperLocations&quot; value=&quot;classpath:mapper/*.xml&quot;/&gt;&lt;!-- 兼容xml方式 --&gt;
-    &lt;/bean&gt;</code></pre>
-<p>e、配置Dao所在包 Mybatis会动态创建实现类</p>
-<pre><code>&lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;
-    &lt;property name=&quot;basePackage&quot; value=&quot;com.haina.ssmbicycle.dao&quot;/&gt;
-&lt;/bean&gt;</code></pre>
-<p>mybatis-config.xml文件主要是a、开启驼峰命名转换b、打印sql语句                </p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 开启驼峰命名转换 user_id ==&gt; userId --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;mapUnderscoreToCamelCase&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 打印sql语句 --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- &lt;setting name=&quot;logImpl&quot; value=&quot;STDOUT_LOGGING&quot;/&gt; --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>（对应得xml文件主要有applicationContext.xml、spring-mvc.xml、mybatis-config.xml、web.xml文件；</p>
+<p>applicationContext.xml文件主要是：</p>
+<p>a、配置注解扫描范围</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.haina.ssmbicycle.service&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>springmvc.xml文件主要是<br>a、配置注解扫描范围</p>
-<pre><code>    &lt;context:component-scan base-package=&quot;com.haina.ssmbicycle.controller&quot;/&gt;</code></pre>
+<p>b、引用数据库配置文件</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">location</span>=<span class="string">&quot;classpath:jdbc.properties&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>c、配置数据源（</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;pooledDateSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;jdbcUrl&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;url&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driverClass&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;driver&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;user&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;user&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;password&#125;&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>d、配置MyBatis的SqlSessionFactory，他是单个数据库映射关系经过编译后的内存镜像</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;sqlSessionFactory&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;configLocation&quot;</span> <span class="attr">value</span>=<span class="string">&quot;classpath:mybatis-config.xml&quot;</span>/&gt;</span><span class="comment">&lt;!-- 配置mybatis全局配置文件 --&gt;</span> </span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;pooledDateSource&quot;</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;mapperLocations&quot;</span> <span class="attr">value</span>=<span class="string">&quot;classpath:mapper/*.xml&quot;</span>/&gt;</span><span class="comment">&lt;!-- 兼容xml方式 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>e、配置Dao所在包 Mybatis会动态创建实现类</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;</span></span></span><br><span class="line">    &lt;property name=&quot;basePackage&quot; value=&quot;com.haina.ssmbicycle.dao&quot;/&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>mybatis-config.xml文件主要是：</p>
+<p>a、开启驼峰命名转换b、打印sql语句                </p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 开启驼峰命名转换 user_id ==&gt; userId --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;mapUnderscoreToCamelCase&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">    	<span class="comment">&lt;!-- 驼峰规则：一般数据库表类似tb_user,里面字段都为uesr_id、uese_name等，而对应的实体类都为userId、userName --&gt;</span></span><br><span class="line">    </span><br><span class="line">		<span class="comment">&lt;!-- 打印sql语句 STDOUT_LOGGING为标准日志输出 --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- &lt;setting name=&quot;logImpl&quot; value=&quot;STDOUT_LOGGING&quot;/&gt; --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>springmvc.xml文件主要是：</p>
+<p>a、配置注解扫描范围</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.haina.ssmbicycle.controller&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p>b、配置拦截器</p>
-<pre><code>&lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
-    &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/views/&quot;/&gt;
-    &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;
-&lt;/bean&gt;</code></pre>
-<p>c、配置多媒体文件解析器，用于文件上传）<br>还有一个重要的文件web.xml(在web/WEB-INF/web.xml)文件（默认欢迎页面的配置、字符编码过滤器的配置、前端控制器、以及指定spring核心配置文件</p>
-<pre><code>&lt;context-param&gt;
-    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
-    &lt;param-value&gt;classpath:applicationContext.xml&lt;/param-value&gt;
-&lt;/context-param&gt;</code></pre>
-<p>和SpringMVC的配置文件，DispatcherServlet是前端控制器;</p>
-<pre><code>&lt;servlet&gt;
-    &lt;servlet-name&gt;springDispatcherServlet&lt;/servlet-name&gt;
-    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
-    &lt;init-param&gt;
-        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
-        &lt;param-value&gt;classpath:springmvc.xml&lt;/param-value&gt;
-    &lt;/init-param&gt;
-    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
-&lt;/servlet&gt;
-&lt;servlet-mapping&gt;
-    &lt;servlet-name&gt;springDispatcherServlet&lt;/servlet-name&gt;
-    &lt;url-pattern&gt;/&lt;/url-pattern&gt;
-&lt;/servlet-mapping&gt;</code></pre>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;prefix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;/WEB-INF/views/&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;suffix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;.jsp&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>c、配置多媒体文件解析器，用于文件上传）</p>
+<p>web.xml文件：(在web/WEB-INF/web.xml)</p>
+<p>（默认欢迎页面的配置、字符编码过滤器的配置、前端控制器、以及指定spring核心配置文件和SpringMVC的配置文件，DispatcherServlet是前端控制器;</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 默认主页 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 指定spring配置文件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:applicationContext.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 配置spring监听器 :可以在web容器启动的时候自动初始化spring容器--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 配置SpringMVC --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>springDispatcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:springmvc.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>springDispatcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 调用Spring的编码过滤器 ：</span></span><br><span class="line"><span class="comment">		Spring中的字符集过滤器可以很方便的为我们解决项目中出现的中文乱码问题，而且使用方法也很简单，只需要在web.xml文件中配置一下该过滤器，设置两个重要的参数（encoding和forceEncoding）即可</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>myencoding<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>forceEncoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 编码过滤器映射路径 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>myencoding<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
 <p>在这里再解释一下@Controller：标名它是一个控制器，被Spring容器所管理，这个注解是在@Component后面出的，为了表示代码的分层，于是就有了@Controller、@Service、@Mapper这三个注解，他们的作用是一样的。</p>
 <p>@RequestMapping：表示接受的请求，还是GetMapping、PostMapping等注解表示请求方法的不同。</p>
 <p>@Autowired：表示自动注入，前提就是被注入的对象被Spring容器所管理。</p>
@@ -495,7 +485,8 @@
 /user/abc.do：只拦截该请求
 .action：只拦截.action最后的请求</code></pre>
 <p>）然后通过映射是去匹配@RequestMapping注解，找到相应的controller；如果面试官还问怎么扫描到你的@RequestMapping注解，是在springmvc-config.xml文件中配置扫描controller包；</p>
-<p>③a.客户端（浏览器）发送请求，直接请求到DispatcherServlet（前端控制器）。</p>
+<p>③</p>
+<p>a.客户端（浏览器）发送请求，直接请求到DispatcherServlet（前端控制器）。</p>
 <p>b.DispatcherServlet根据请求信息调用HandlerMapping(HandlerMapping,充当着url和Controller之间映射关系配置的角色;HandlerMapping是接口，Spring MVC提供了一系列HandlerMapping的实现，根据一定的规则选择controller。如果当前的HandlerMappign实现中没有能够满足你所需要的规则是，可以通过实现HandlerMapping接口进行扩展。它主要有三部分组成：HandlerMapping映射注册、根据url获取对应的处理器、拦截器注册。),解析请求对应的Handler。</p>
 <p>c.解析到对应的Handler(也就是我们常说的Controller控制器)后，开始由HandlerAdapter适配器处理。</p>
 <p>d.HandlerAdapter适配器会根据Handler来调用真正的处理器来处理请求，并处理相应的业务逻辑。</p>
@@ -503,7 +494,7 @@
 <p>f.ViewResolver（视图解析器）会根据逻辑上的View查找实际的View</p>
 <p>g.DispatcherServlt把返回的Model数据对象传给View（进行视图渲染）</p>
 <p>h.把View返回给请求者（浏览器）</p>
-<p>④</p>
+<p>④首先用户想要买书，必须先要把书加入到购物车，在购物车里点击提交订单时会验证你数据库中图书的库存，如果购买图书大于库存数量，会提示购买图书的名字库存不足，并告诉库存有多少图书。</p>
 <p>⑤</p>
 <p>⑥<strong>Mybatis中接口和对应的mapper文件不一定要放在同一个包下，放在一起的目的是为了Mybatis进行自动扫描，并且要注意此时java接口的名称和mapper文件的名称要相同（mybatis会根据Mapper.xml中配置的信息创建一个实现了Maper.java接口的代理类(使用JDK动态代理)），否则会报异常，由于此时Mybatis会自动解析对应的接口和相应的配置文件，所以就不需要配置mapper文件的位置了。如果接口和mapper文件不在同一个包下，就不能进行自动扫描解析了，需要对接口和文件分别进行配置；使用Spring来配置</strong></p>
 <pre><code>&lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
@@ -622,7 +613,7 @@ public static void main(String[] args) &#123;
 <li><strong>AIO（Asynchronous I/0）：AIO也就是NIO 2，</strong>在Java 7中引入了NIO的改进版NIO 2，它是异步非阻塞的I0模型。异步10是基于事件和回调机制实现的,</li>
 </ul>
 <p><strong>7.你理解的多态</strong></p>
-<p>所谓多态就是指程序中定义的引⽤变量所指向的具体类型和通过该引⽤变量发出的⽅法调⽤在编程时并<br>不确定，⽽是在程序运⾏期间才确定，即⼀个引⽤变量到底会指向哪个类的实例对象，该引⽤变量发出<br>的⽅法调⽤到底是哪个类中实现的⽅法，必须在由程序运⾏期间才能决定。</p>
+<p>所谓多态就是指程序中定义的引⽤变量所指向的具体类型和通过该引⽤变量发出的⽅法调⽤在编程时并不确定，⽽是在程序运⾏期间才确定，<strong>即⼀个引⽤变量到底会指向哪个类的实例对象，该引⽤变量发出的⽅法调⽤到底是哪个类中实现的⽅法，必须在由程序运⾏期间才能决定。</strong></p>
 <p>在 Java 中有两种形式可以实现多态：继承（多个⼦类对同⼀⽅法的重写）和接⼝（实现接⼝并覆盖[又叫重写]接⼝中同一方法）。</p>
 <p><strong>8.说说maven是做什么的，并说几条maven常见命令，你的项目中用到了maven吗</strong></p>
 <p><strong>概述</strong></p>
@@ -651,7 +642,7 @@ public static void main(String[] args) &#123;
 </li>
 <li><p>maven test：对项目的运行测试。</p>
 </li>
-<li><p>mvnen deploy： 发布项目</p>
+<li><p>maven deploy： 发布项目</p>
 </li>
 <li><p>maven packet：可以打包后的文件存放到项目的 target 目录下，打包好的文件通常都是编译后生成的class文件。</p>
 </li>
@@ -810,14 +801,14 @@ public static void main(String[] args) &#123;
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">40k</span>
+    <span title="站点总字数">42k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">36 分钟</span>
+    <span title="站点阅读时长">38 分钟</span>
   </span>
 </div><div class="footer-custom">
 
