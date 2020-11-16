@@ -155,17 +155,17 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">19</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">23</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -250,20 +250,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -293,7 +293,7 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2020-11-11-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F.html" title="2020-11-11-选择排序.html">选择排序</a>
+          <a href="/2020-11-12-%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F.html" title="2020-11-12-归并排序.html">归并排序</a>
         </li>
     </ul>
   </div>
@@ -417,14 +417,15 @@
 <li><strong>时间复杂度（平均）：</strong>O(n²) ；最好O(n²)，最差O(n²)</li>
 <li><strong><span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTclQTklQkElRTklOTclQjQlRTUlQTQlOEQlRTYlOUQlODIlRTUlQkElQTYvOTY2NDI1Nz9mcj1hbGFkZGlu">空间复杂度<i class="fa fa-external-link-alt"></i></span>：</strong>O(1)</li>
 <li><strong><span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTYlOEUlOTIlRTUlQkElOEYlRTclQUUlOTclRTYlQjMlOTUlRTclQTglQjMlRTUlQUUlOUElRTYlODAlQTcvOTc2MzI1MA==">稳定性<i class="fa fa-external-link-alt"></i></span>：</strong>稳定</li>
+<li><strong>排序位置：</strong>原地排序</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">publiv <span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span> data[])</span></span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(data==<span class="keyword">null</span> &amp;&amp; data.length&lt;<span class="number">2</span>)&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;data.length-<span class="number">1</span>;i++)&#123;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;data.length-i-<span class="number">1</span>;j++)&#123;</span><br><span class="line">           <span class="keyword">if</span>(data[j]&gt;data[j+<span class="number">1</span>])&#123;</span><br><span class="line">               <span class="keyword">int</span> temp=data[j];</span><br><span class="line">               data[j]=data[j+<span class="number">1</span>];</span><br><span class="line">               data[j+<span class="number">1</span>]=temp;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   System.out.println(<span class="string">&quot;第&quot;</span>+i+<span class="string">&quot;次排序&quot;</span>+java.util.Arrays.toString(data));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">publiv <span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span> data[])</span></span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(data==<span class="keyword">null</span> &amp;&amp; data.length&lt;<span class="number">2</span>)&#123;</span><br><span class="line">       <span class="keyword">return</span> ;</span><br><span class="line">   &#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;data.length-<span class="number">1</span>;i++)&#123;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;data.length-i-<span class="number">1</span>;j++)&#123;</span><br><span class="line">           <span class="keyword">if</span>(data[j]&gt;data[j+<span class="number">1</span>])&#123;</span><br><span class="line">               <span class="keyword">int</span> temp=data[j];</span><br><span class="line">               data[j]=data[j+<span class="number">1</span>];</span><br><span class="line">               data[j+<span class="number">1</span>]=temp;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   System.out.println(<span class="string">&quot;第&quot;</span>+i+<span class="string">&quot;次排序&quot;</span>+java.util.Arrays.toString(data));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>测试：</strong></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span>  data[]=&#123;<span class="number">36</span>,<span class="number">22</span>,<span class="number">55</span>,<span class="number">66</span>,<span class="number">31</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">18</span>,<span class="number">9</span>&#125;;</span><br><span class="line">		demo1_01 d =<span class="keyword">new</span> demo1_01();</span><br><span class="line">		System.out.println(<span class="string">&quot;没排序前&quot;</span>+java.util.Arrays.toString(data));</span><br><span class="line">		d.bubbleSort(data);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;data.length;i++)&#123;</span><br><span class="line">	   		 System.out.print(data[i]+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">没排序前[<span class="number">36</span>, <span class="number">22</span>, <span class="number">55</span>, <span class="number">66</span>, <span class="number">31</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">18</span>, <span class="number">9</span>]</span><br><span class="line">第<span class="number">0</span>次排序[<span class="number">22</span>, <span class="number">36</span>, <span class="number">55</span>, <span class="number">31</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">18</span>, <span class="number">9</span>, <span class="number">66</span>]</span><br><span class="line">第<span class="number">1</span>次排序[<span class="number">22</span>, <span class="number">36</span>, <span class="number">31</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">18</span>, <span class="number">9</span>, <span class="number">55</span>, <span class="number">66</span>]</span><br><span class="line">第<span class="number">2</span>次排序[<span class="number">22</span>, <span class="number">31</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">18</span>, <span class="number">9</span>, <span class="number">36</span>, <span class="number">55</span>, <span class="number">66</span>]</span><br><span class="line">第<span class="number">3</span>次排序[<span class="number">22</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">18</span>, <span class="number">9</span>, <span class="number">31</span>, <span class="number">36</span>, <span class="number">55</span>, <span class="number">66</span>]</span><br><span class="line">第<span class="number">4</span>次排序[<span class="number">4</span>, <span class="number">6</span>, <span class="number">18</span>, <span class="number">9</span>, <span class="number">22</span>, <span class="number">31</span>, <span class="number">36</span>, <span class="number">55</span>, <span class="number">66</span>]</span><br><span class="line">第<span class="number">5</span>次排序[<span class="number">4</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">18</span>, <span class="number">22</span>, <span class="number">31</span>, <span class="number">36</span>, <span class="number">55</span>, <span class="number">66</span>]</span><br><span class="line">第<span class="number">6</span>次排序[<span class="number">4</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">18</span>, <span class="number">22</span>, <span class="number">31</span>, <span class="number">36</span>, <span class="number">55</span>, <span class="number">66</span>]</span><br><span class="line">第<span class="number">7</span>次排序[<span class="number">4</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">18</span>, <span class="number">22</span>, <span class="number">31</span>, <span class="number">36</span>, <span class="number">55</span>, <span class="number">66</span>]</span><br><span class="line"><span class="number">4</span> <span class="number">6</span> <span class="number">9</span> <span class="number">18</span> <span class="number">22</span> <span class="number">31</span> <span class="number">36</span> <span class="number">55</span> <span class="number">66</span> </span><br></pre></td></tr></table></figure>
 
 <p><strong>优化：</strong>看上面的测试可知，在第5次排序时就已经排好序了，但是程序自己不知道，还会一层一层的比较。所以我们可以进行一下优化，设置一个标志位让程序知道什么时候已经排好序了。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span> []data)</span></span>&#123;</span><br><span class="line">   		 <span class="keyword">if</span>(data==<span class="keyword">null</span> &amp;&amp; data.length&lt;<span class="number">2</span>)&#123;</span><br><span class="line">     		   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> 			   &#125;</span><br><span class="line">		 <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;data.length-<span class="number">1</span>;i++)&#123;</span><br><span class="line">			   <span class="keyword">int</span> flag=<span class="number">0</span>;</span><br><span class="line">		       <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;data.length-i-<span class="number">1</span>;j++)&#123;</span><br><span class="line">		            <span class="keyword">if</span>(data[j]&gt;data[j+<span class="number">1</span>])&#123;</span><br><span class="line">		                <span class="keyword">int</span> temp=data[j];</span><br><span class="line">		                data[j]=data[j+<span class="number">1</span>];</span><br><span class="line">		                data[j+<span class="number">1</span>]=temp;</span><br><span class="line">		                flag=<span class="number">1</span>;</span><br><span class="line">		       &#125;</span><br><span class="line">		    &#125;</span><br><span class="line">           <span class="keyword">if</span>(flag==<span class="number">0</span>)&#123;</span><br><span class="line">		    	<span class="keyword">return</span>;</span><br><span class="line">	 &#125;</span><br><span class="line">		    System.out.println(<span class="string">&quot;第&quot;</span>+i+<span class="string">&quot;次排序&quot;</span>+java.util.Arrays.toString(data));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span> []data)</span></span>&#123;</span><br><span class="line">   		 <span class="keyword">if</span>(data==<span class="keyword">null</span> &amp;&amp; data.length&lt;<span class="number">2</span>)&#123;</span><br><span class="line">     		   <span class="keyword">return</span> ;</span><br><span class="line"> 			   &#125;</span><br><span class="line">		 <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;data.length-<span class="number">1</span>;i++)&#123;</span><br><span class="line">			   <span class="keyword">int</span> flag=<span class="number">0</span>;</span><br><span class="line">		       <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;data.length-i-<span class="number">1</span>;j++)&#123;</span><br><span class="line">		            <span class="keyword">if</span>(data[j]&gt;data[j+<span class="number">1</span>])&#123;</span><br><span class="line">		                <span class="keyword">int</span> temp=data[j];</span><br><span class="line">		                data[j]=data[j+<span class="number">1</span>];</span><br><span class="line">		                data[j+<span class="number">1</span>]=temp;</span><br><span class="line">		                flag=<span class="number">1</span>;</span><br><span class="line">		       &#125;</span><br><span class="line">		    &#125;</span><br><span class="line">           <span class="keyword">if</span>(flag==<span class="number">0</span>)&#123;</span><br><span class="line">		    	<span class="keyword">return</span>;</span><br><span class="line">	 &#125;</span><br><span class="line">		    System.out.println(<span class="string">&quot;第&quot;</span>+i+<span class="string">&quot;次排序&quot;</span>+java.util.Arrays.toString(data));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>测试：</strong></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">没排序前[<span class="number">36</span>, <span class="number">22</span>, <span class="number">55</span>, <span class="number">66</span>, <span class="number">31</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">18</span>, <span class="number">9</span>]</span><br><span class="line">第<span class="number">0</span>次排序[<span class="number">22</span>, <span class="number">36</span>, <span class="number">55</span>, <span class="number">31</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">18</span>, <span class="number">9</span>, <span class="number">66</span>]</span><br><span class="line">第<span class="number">1</span>次排序[<span class="number">22</span>, <span class="number">36</span>, <span class="number">31</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">18</span>, <span class="number">9</span>, <span class="number">55</span>, <span class="number">66</span>]</span><br><span class="line">第<span class="number">2</span>次排序[<span class="number">22</span>, <span class="number">31</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">18</span>, <span class="number">9</span>, <span class="number">36</span>, <span class="number">55</span>, <span class="number">66</span>]</span><br><span class="line">第<span class="number">3</span>次排序[<span class="number">22</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">18</span>, <span class="number">9</span>, <span class="number">31</span>, <span class="number">36</span>, <span class="number">55</span>, <span class="number">66</span>]</span><br><span class="line">第<span class="number">4</span>次排序[<span class="number">4</span>, <span class="number">6</span>, <span class="number">18</span>, <span class="number">9</span>, <span class="number">22</span>, <span class="number">31</span>, <span class="number">36</span>, <span class="number">55</span>, <span class="number">66</span>]</span><br><span class="line">第<span class="number">5</span>次排序[<span class="number">4</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">18</span>, <span class="number">22</span>, <span class="number">31</span>, <span class="number">36</span>, <span class="number">55</span>, <span class="number">66</span>]</span><br><span class="line"><span class="number">4</span> <span class="number">6</span> <span class="number">9</span> <span class="number">18</span> <span class="number">22</span> <span class="number">31</span> <span class="number">36</span> <span class="number">55</span> <span class="number">66</span> </span><br></pre></td></tr></table></figure>
@@ -440,6 +441,9 @@
       
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2020-11-11-插入排序.html" rel="bookmark">插入排序</a></div>
+    </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2020-11-11-选择排序.html" rel="bookmark">选择排序</a></div>
     </li>
@@ -490,8 +494,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020-11-07-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95.html" rel="prev" title="动态规划">
-                  <i class="fa fa-chevron-left"></i> 动态规划
+                <a href="/2020-11-08-%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html" rel="prev" title="贪心算法">
+                  <i class="fa fa-chevron-left"></i> 贪心算法
                 </a>
             </div>
             <div class="post-nav-item">
@@ -562,14 +566,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">98k</span>
+    <span title="站点总字数">112k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:29</span>
+    <span title="站点阅读时长">1:41</span>
   </span>
 </div><div class="footer-custom">
 
