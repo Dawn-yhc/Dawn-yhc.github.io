@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://yuhaicheng.xyz/2020-11-12-%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F.html</loc>
+    
+    <lastmod>2020-12-17</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://yuhaicheng.xyz/2020-11-12-%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F.html</loc>
     
     <lastmod>2020-12-17</lastmod>
@@ -9,7 +16,14 @@
   </url>
   
   <url>
-    <loc>https://yuhaicheng.xyz/2020-11-12-%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F.html</loc>
+    <loc>https://yuhaicheng.xyz/2020-11-13-SSM%E4%B8%AD%E7%9A%84%E8%BF%87%E6%BB%A4%E5%99%A8%E5%92%8C%E6%8B%A6%E6%88%AA%E5%99%A8.html</loc>
+    
+    <lastmod>2020-12-17</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yuhaicheng.xyz/2020-11-17-http-status-301302-&-java%E9%87%8D%E5%AE%9A%E5%90%91%E8%BD%AC%E5%8F%91.html</loc>
     
     <lastmod>2020-12-17</lastmod>
     
@@ -228,6 +242,20 @@
   </url>
   
   <url>
+    <loc>https://yuhaicheng.xyz/tags/SSM%E6%A1%86%E6%9E%B6/</loc>
+    <lastmod>2020-11-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://yuhaicheng.xyz/tags/%E9%87%8D%E5%AE%9A%E5%90%91-%E8%BD%AC%E5%8F%91/</loc>
+    <lastmod>2020-11-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://yuhaicheng.xyz/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2020-11-16</lastmod>
     <changefreq>daily</changefreq>
@@ -280,6 +308,20 @@
   
   <url>
     <loc>https://yuhaicheng.xyz/categories/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2020-11-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://yuhaicheng.xyz/categories/SSM/</loc>
+    <lastmod>2020-11-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://yuhaicheng.xyz/categories/java/</loc>
     <lastmod>2020-11-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
