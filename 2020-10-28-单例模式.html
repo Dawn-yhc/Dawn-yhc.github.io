@@ -155,17 +155,17 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">26</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">20</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -250,20 +250,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -293,7 +293,7 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2020-11-13-SSM%E4%B8%AD%E7%9A%84%E8%BF%87%E6%BB%A4%E5%99%A8%E5%92%8C%E6%8B%A6%E6%88%AA%E5%99%A8.html" title="2020-11-13-SSM中的过滤器和拦截器.html">SSM中的过滤器和拦截器</a>
+          <a href="/%E9%9D%A2%E8%AF%95%E8%AE%B0%E5%BD%95.html" title="面试记录.html"></a>
         </li>
     </ul>
   </div>
@@ -386,7 +386,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5.4k</span>
+      <span>5.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -426,6 +426,71 @@
 
 <h3 id="4-双重检查锁（提高同步锁的效率）"><a href="#4-双重检查锁（提高同步锁的效率）" class="headerlink" title="4.双重检查锁（提高同步锁的效率）"></a>4.双重检查锁（提高同步锁的效率）</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton4</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 双重检查锁（提高同步锁的效率）： </span></span><br><span class="line"><span class="comment">		使用双重检查锁进一步做了优化，可以避免整个方法被锁，只对需要锁的代码部分加锁，可以提高执行效率。</span></span><br><span class="line"><span class="comment">        这里还用到了volatile关键字来修饰singleton，其最关键的作用是防止指令重排</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton4 instance=<span class="keyword">null</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton4 <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(instance==<span class="keyword">null</span>)&#123;</span><br><span class="line">		<span class="keyword">synchronized</span> (Singleton4.class) &#123;</span><br><span class="line">			<span class="keyword">if</span>(instance==<span class="keyword">null</span>)&#123;</span><br><span class="line">				 instance=<span class="keyword">new</span> Singleton4();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>不加volatile；问题会出现在创建对象的语句<code>instance=new Singleton4();</code> 上，在java中创建一个对象并非是一个原子操作，可以被分解成三行伪代码：</p>
+<ol>
+<li>分配内存空间</li>
+<li>初始化对象</li>
+<li>将对象指向刚分配的内存空间</li>
+</ol>
+<p>但是有些编译器为了性能的原因，可能会将第二步和第三步进行<strong>重排序（指令重排）</strong>，执行顺序可能就成了：</p>
+<ol>
+<li>分配内存空间</li>
+<li>将对象指向刚分配的内存空间（原第3步）</li>
+<li>初始化对象（原第2步）</li>
+</ol>
+<p>在单线程程序下，重排序不会对最终结果产生影响，但是并发的情况下，可能会导致某些线程访问到未初始化的变量。</p>
+<p>模拟一个2个线程创建单例的场景，如下表：现在考虑重排序后，两个线程发生了以下调用：</p>
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th>Thread A</th>
+<th>Thread B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>T1</td>
+<td>检查到<code>instance</code>为空</td>
+<td></td>
+</tr>
+<tr>
+<td>T2</td>
+<td>获取锁</td>
+<td></td>
+</tr>
+<tr>
+<td>T3</td>
+<td>再次检查到<code>instance</code>为空</td>
+<td></td>
+</tr>
+<tr>
+<td>T4</td>
+<td>为<code>instance</code>分配内存空间</td>
+<td></td>
+</tr>
+<tr>
+<td>T5</td>
+<td>将<code>instance</code>指向已分配的内存空间</td>
+<td></td>
+</tr>
+<tr>
+<td>T6</td>
+<td></td>
+<td>检查到<code>instance</code>不为空</td>
+</tr>
+<tr>
+<td>T7</td>
+<td></td>
+<td>访问<code>instance</code>的数据（此时<code>uniqueSingleton</code>对象还未完成初始化）</td>
+</tr>
+<tr>
+<td>T8</td>
+<td>初始化<code>instance</code></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>在这种情况下，T7时刻线程B对<code>instance</code>进行的访问，访问的是一个<strong>初始化未完成</strong>的对象，就产生了重大安全隐患。</p>
+<p>按照这样的顺序执行，线程B将会获得一个未初始化的对象，并且自始至终，线程B无需获取锁！</p>
 <h3 id="5-静态内部类"><a href="#5-静态内部类" class="headerlink" title="5.静态内部类"></a>5.静态内部类</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton5</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 静态内部类： </span></span><br><span class="line"><span class="comment">		这种方式引入了一个内部静态类（static class），静态内部类只有在调用时才会加载，它保证了Singleton 实例的延迟初始化，又保证了实例的唯一性。</span></span><br><span class="line"><span class="comment">		它把singleton 的实例化操作放到一个静态内部类中，在第一次调用getInstance() 方法时，JVM 才会去加载InnerObject 类，同时初始化singleton 实例，</span></span><br><span class="line"><span class="comment">		所以能让 getInstance() 方法线程安全。 </span></span><br><span class="line"><span class="comment">		特点是：即能延迟加载，也能保证线程安全。 </span></span><br><span class="line"><span class="comment">		静态内部类虽然保证了单例在多线程并发下的线程安全性，但是在遇到序列化对象时，默认的方式运行得到的结果就是多例的。</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton5</span><span class="params">()</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerObject</span> </span>&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">static</span> Singleton5 instance = <span class="keyword">new</span> Singleton5(); </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton5 <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> InnerObject.instance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>测试：</p>
@@ -547,7 +612,7 @@
 <div class="copyright">
   
   &copy; 2015 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -559,14 +624,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">130k</span>
+    <span title="站点总字数">295k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:59</span>
+    <span title="站点阅读时长">4:28</span>
   </span>
 </div><div class="footer-custom">
 
