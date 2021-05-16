@@ -38,14 +38,11 @@
 <meta property="og:site_name" content="曙光苑">
 <meta property="og:description" content="null">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pic1.zhimg.com/80/v2-ed8058116c2d603a88c69209e795f490_720w.jpg">
-<meta property="og:image" content="https://pic3.zhimg.com/80/v2-f76b5721c5b6f4b2ecfaccf892db57be_720w.jpg">
 <meta property="article:published_time" content="2020-11-23T14:05:14.000Z">
 <meta property="article:modified_time" content="2020-12-01T08:05:14.000Z">
 <meta property="article:author" content="Dawn-yhc">
-<meta property="article:tag" content="sql">
+<meta property="article:tag" content="索引">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic1.zhimg.com/80/v2-ed8058116c2d603a88c69209e795f490_720w.jpg">
 
 
 <link rel="canonical" href="https://yuhaicheng.xyz/2020-11-24%E7%B4%A2%E5%BC%95%E7%A7%8D%E7%B1%BB.html">
@@ -158,17 +155,17 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">45</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">19</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">23</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">20</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -237,7 +234,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySql"><span class="nav-number">1.</span> <span class="nav-text">MySql</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL%E7%B4%A2%E5%BC%95%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.1.</span> <span class="nav-text">MySQL索引种类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.1.1.</span> <span class="nav-text">语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.2.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.1.3.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVCC"><span class="nav-number">1.2.</span> <span class="nav-text">MVCC</span></a></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySql"><span class="nav-number">1.</span> <span class="nav-text">MySql</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL%E7%B4%A2%E5%BC%95%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.1.</span> <span class="nav-text">MySQL索引种类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.1.1.</span> <span class="nav-text">语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.普通索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">2.唯一索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E4%B8%BB%E9%94%AE%E7%B4%A2%E5%BC%95"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">3.主键索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E7%BB%84%E5%90%88%E7%B4%A2%E5%BC%95"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">4.组合索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">5.全文索引</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.2.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.1.3.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -253,20 +250,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -296,7 +293,7 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/%E9%9D%A2%E8%AF%95%E8%AE%B0%E5%BD%95.html" title="面试记录.html">线程池相关概念、回表</a>
+          <a href="/2021-04-10-gc%E3%80%81oom.html" title="2021-04-10-gc、oom.html">gc类型、内存泄露和内存溢出</a>
         </li>
     </ul>
   </div>
@@ -383,7 +380,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/MySql/" itemprop="url" rel="index"><span itemprop="name">MySql</span></a>
+          <a href="/categories/Mysql/" itemprop="url" rel="index"><span itemprop="name">Mysql</span></a>
         </span>
     </span>
 
@@ -395,14 +392,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.2k</span>
+      <span>1.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -415,19 +412,25 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="MySql"><a href="#MySql" class="headerlink" title="MySql"></a>MySql</h1><h2 id="MySQL索引种类"><a href="#MySQL索引种类" class="headerlink" title="MySQL索引种类"></a>MySQL索引种类</h2><p>在 InnoDB 中，有聚簇索引和普通索引之分，聚簇索引根据主键来构建，叶子节点存放的是该主键对应的这一行记录，根据主键查询可以直接利用聚簇索引定位到所在记录。而普通索引根据申明这个索引时候的列来构建，叶子节点存放的是这一行记录对应的主键的值，根据普通索引查询需要先在普通索引上找到对应的主键的值，然后根据主键值去聚簇索引上查找记录，俗称回表。如果我们查询一整行记录的话，一定要去聚簇索引上查找，而如果我们只需要根据普通索引查询主键的值，由于这些值在普通索引上已经存在，所以并不需要回表，这个称为索引覆盖，在一定程度上可以提高查询效率。</p>
-<p>1.普通索引<br>2.唯一索引<br>3.主键索引<br>4.组合索引<br>5.全文索引</p>
+<ol>
+<li>普通索引</li>
+<li>唯一索引</li>
+<li>主键索引</li>
+<li>组合索引</li>
+<li>全文索引</li>
+</ol>
 <h3 id="语句"><a href="#语句" class="headerlink" title="语句"></a><strong>语句</strong></h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE table_name[col_name data type]</span><br><span class="line">[unique|fulltext][index|key][index_name](col_name[length])[asc|desc]</span><br></pre></td></tr></table></figure>
 
 <p>1.unique|fulltext为可选参数，分别表示唯一索引、全文索引<br>2.index和key为同义词，两者作用相同，用来指定创建索引<br>3.col_name为需要创建索引的字段列，该列必须从数据表中该定义的多个列中选择<br>4.index_name指定索引的名称，为可选参数，如果不指定，默认col_name为索引值<br>5.length为可选参数，表示索引的长度，只有字符串类型的字段才能指定索引长度<br>6.asc或desc指定升序或降序的索引值存储</p>
-<p>1.普通索引<br>是最基本的索引，它没有任何限制。它有以下几种创建方式：<br>（1）直接创建索引</p>
+<h4 id="1-普通索引"><a href="#1-普通索引" class="headerlink" title="1.普通索引"></a>1.普通索引</h4><p>是最基本的索引，它没有任何限制。它有以下几种创建方式：<br>（1）直接创建索引</p>
 <p>（2）修改表结构的方式添加索引</p>
 <p>（3）创建表的时候同时创建索引</p>
-<p>2.唯一索引<br>与前面的普通索引类似，不同的就是：索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一。它有以下几种创建方式：<br>（1）创建唯一索引</p>
+<h4 id="2-唯一索引"><a href="#2-唯一索引" class="headerlink" title="2.唯一索引"></a>2.唯一索引</h4><p>与前面的普通索引类似，不同的就是：索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一。它有以下几种创建方式：<br>（1）创建唯一索引</p>
 <p>（2）修改表结构</p>
 <p>（3）创建表的时候直接指定</p>
-<p>3.主键索引<br>是一种特殊的唯一索引，一个表只能有一个主键，不允许有空值。一般是在建表的时候同时创建主键索引</p>
-<p>4.组合索引<br>指多个字段上创建的索引，只有在查询条件中使用了创建索引时的第一个字段，索引才会被使用。使用组合索引时遵循最左前缀集合</p>
-<p>5.全文索引<br>主要用来查找文本中的关键字，而不是直接与索引中的值相比较。fulltext索引跟其它索引大不相同，它更像是一个搜索引擎，而不是简单的where语句的参数匹配。fulltext索引配合match against操作使用，而不是一般的where语句加like。它可以在create table，alter table ，create index使用，不过目前只有char、varchar，text 列上可以创建全文索引。值得一提的是，在数据量较大时候，现将数据放入一个没有全局索引的表中，然后再用CREATE index创建fulltext索引，要比先为一张表建立fulltext然后再将数据写入的速度快很多。<br>（1）创建表的适合添加全文索引</p>
+<h4 id="3-主键索引"><a href="#3-主键索引" class="headerlink" title="3.主键索引"></a>3.主键索引</h4><p>是一种特殊的唯一索引，一个表只能有一个主键，不允许有空值。一般是在建表的时候同时创建主键索引</p>
+<h4 id="4-组合索引"><a href="#4-组合索引" class="headerlink" title="4.组合索引"></a>4.组合索引</h4><p>指多个字段上创建的索引，只有在查询条件中使用了创建索引时的第一个字段，索引才会被使用。使用组合索引时遵循最左前缀集合</p>
+<h4 id="5-全文索引"><a href="#5-全文索引" class="headerlink" title="5.全文索引"></a>5.全文索引</h4><p>主要用来查找文本中的关键字，而不是直接与索引中的值相比较。fulltext索引跟其它索引大不相同，它更像是一个搜索引擎，而不是简单的where语句的参数匹配。fulltext索引配合match against操作使用，而不是一般的where语句加like。它可以在create table，alter table ，create index使用，不过目前只有char、varchar，text 列上可以创建全文索引。值得一提的是，在数据量较大时候，现将数据放入一个没有全局索引的表中，然后再用CREATE index创建fulltext索引，要比先为一张表建立fulltext然后再将数据写入的速度快很多。<br>（1）创建表的适合添加全文索引</p>
 <p>（2）修改表结构添加全文索引</p>
 <p>（3）直接创建索引</p>
 <h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>1.虽然索引大大提高了查询速度，<strong>同时却会降低更新表的速度</strong>，如对表进行insert、update和delete。因为更新表时，不仅要保存数据，还要保存一下索引文件。</p>
@@ -443,25 +446,6 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT * FROM table_name WHERE YEAR(column_name)&lt;2017;</span><br></pre></td></tr></table></figure>
 
 <p>6.不使用！=和&lt;&gt;操作</p>
-<h2 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h2><p><strong>InnoDB的MVCC，是通过在每行纪录后面保存两个隐藏的列来实现的。这两个列，一个保存了行的创建时间，一个保存了行的过期时间（或删除时间），当然存储的并不是实际的时间值，而是系统版本号。</strong>每开始一个新的事务，系统版本号都会自动递增。事务开始时刻的系统版本号会作为事务的版本号，用来和查询到的每行纪录的版本号进行比较。</p>
-<p>所谓的<code>MVCC（Multi-Version Concurrency Control ，多版本并发控制）</code>指的就是在使用<code>读已提交（READ COMMITTD）、可重复读（REPEATABLE READ）</code>这两种隔离级别的事务<strong>在执行普通的SELECT操作时访问记录的版本链的过程</strong>，这样子可以使不同事务的读-写、写-读操作并发执行，从而提升系统性能。</p>
-<p>这两个隔离级别的一个很大不同就是：<code>生成ReadView的时机不同</code>，READ COMMITTD在每一次进行普通SELECT操作前都会生成一个ReadView，而REPEATABLE READ只在第一次进行普通SELECT操作前生成一个ReadView，数据的可重复读其实就是ReadView的重复使用。</p>
-<p>这样去解释这些技术，主要是希望大家对现象背后的本质多点思考，不然你去背出这几种隔离级别，以及各种数据现象是没有任何意义的，实际开发过程中真的出现了问题，你不懂本质以及过程，你去排查也会很难受的，到头来还是要看书，看资料。</p>
-<p><strong>在REPEATABLE READ的条件下：</strong></p>
-<p>SELECT InnoDB会根据以下两个条件检查每行纪录：</p>
-<ul>
-<li>InnoDB只查找版本早于当前事务版本的数据行，即，行的系统版本号小于或等于事务的系统版本号，这样可以确保事务读取的行，要么是在事务开始前已经存在的，要么是事务自身插入或者修改过的。</li>
-<li>行的删除版本，要么未定义，要么大于当前事务版本号。这样可以确保事务读取到的行，在事务开始之前未被删除。 只有符合上述两个条件的纪录，才能作为查询结果返回。</li>
-</ul>
-<p>INSERT - InnoDB为插入的每一行保存当前系统版本号作为行版本号。</p>
-<p>DELETE - InnoDB为删除的每一行保存当前系统版本号作为行删除标识。</p>
-<p>UPDATE - InnoDB为插入一行新纪录，保存当前系统版本号作为行版本号，同时，保存当前系统版本号到原来的行作为行删除标识。</p>
-<p>优点： 保存这两个额外系统版本号，使大多数读操作都可以不用加锁。这样设计使得读数据操作很简单，性能很好。</p>
-<p>缺点： 每行纪录都需要额外的存储空间，需要做更多的行检查工作，以及一些额外的维护工作。</p>
-<p>读到这里，也许会有一个疑问，考虑如下执行序列：</p>
-<p><img data-src="https://pic1.zhimg.com/80/v2-ed8058116c2d603a88c69209e795f490_720w.jpg" alt="img" loading="lazy"></p>
-<p>按照之前的Select规则，会话B 的事务是在 会话A的后面开启的，那么B的事务版本号大于A的事务版本号。这样在A中插入的数据在未提交的情况下，B可以读到A修改的数据，这不就自相矛盾了么？其实不然，InnoDB每个事务在开始的时候，会将当前系统中的活跃事务列表（trx_sys-&gt;trx_list）创建一个副本（read view），然后一致性读去比较记录的tx id的时候，并不是根据当前事务的tx id，而是根据read view最早一个事务的tx id（read view-&gt;up_limit_id）来做比较的，这样就能确保在事务B之前没有提交的所有事务的变更，B事务都是看不到的。如下图所示：</p>
-<p><img data-src="https://pic3.zhimg.com/80/v2-f76b5721c5b6f4b2ecfaccf892db57be_720w.jpg" alt="img" loading="lazy"></p>
 
     </div>
 
@@ -514,15 +498,15 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
+              <a href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag"><i class="fa fa-tag"></i> 索引</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020-11-20-%E6%B7%B1%E6%BC%94%E6%99%BA%E8%83%BD%E4%B8%80%E9%9D%A2%E8%A7%86%E9%A2%91.html" rel="prev" title="深演智能一面视频">
-                  <i class="fa fa-chevron-left"></i> 深演智能一面视频
+                <a href="/2020-11-20-%E6%9F%90%E4%B8%9C%E5%AE%9E%E4%B9%A0%E4%B8%80%E9%9D%A2.html" rel="prev" title="某东实习一面">
+                  <i class="fa fa-chevron-left"></i> 某东实习一面
                 </a>
             </div>
             <div class="post-nav-item">
@@ -593,14 +577,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">295k</span>
+    <span title="站点总字数">378k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:28</span>
+    <span title="站点阅读时长">5:44</span>
   </span>
 </div><div class="footer-custom">
 

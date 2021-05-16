@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="zh-CN,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/weilining/blog.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/weilining/blog.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/weilining/blog.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/weilining/blog.io/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="1111RcBkV43JHcyiH4z1Yk2xu-mqlS1fQNk5Dzv7_q0">
+  <meta name="msvalidate.01" content="1111BC77E02800759CE29C4ACCE487BD">
+  <meta name="yandex-verification" content="11112a93328de5da">
+  <meta name="baidu-site-verification" content="1111-wFDrn4lvkD">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+  <script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yuhaicheng.xyz","root":"/","scheme":"Gemini","version":"8.0.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="null">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySql和Spring中事物的实现原理">
+<meta property="og:url" content="https://yuhaicheng.xyz/2021-03-23-MySql%E5%92%8CSpring%E4%B8%AD%E4%BA%8B%E7%89%A9%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86.html">
+<meta property="og:site_name" content="曙光苑">
+<meta property="og:description" content="null">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/ds.jpg">
+<meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/sdd.jpg">
+<meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/format,png">
+<meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/formaddt,png">
+<meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/formssat,png">
+<meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/forssssmat,png">
+<meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/fggormat,png">
+<meta property="article:published_time" content="2021-03-23T03:15:14.000Z">
+<meta property="article:modified_time" content="2021-03-25T03:05:14.000Z">
+<meta property="article:author" content="Dawn-yhc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/ds.jpg">
+
+
+<link rel="canonical" href="https://yuhaicheng.xyz/2021-03-23-MySql%E5%92%8CSpring%E4%B8%AD%E4%BA%8B%E7%89%A9%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86.html">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>MySql和Spring中事物的实现原理 | 曙光苑</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108155018-3"></script>
+    <script data-pjax>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-108155018-3');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="曙光苑" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">曙光苑</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">有朋自远方来，不亦乐乎</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-bell fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">23</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-baidusitemap">
+
+    <a href="/baidusitemap.xml" rel="section"><i class="fa fa-cloud fa-fw"></i>百度站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81MySql%E4%B8%AD%E4%BA%8B%E7%89%A9%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">一、MySql中事物的实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E7%89%A9"><span class="nav-number">1.1.</span> <span class="nav-text">1、什么是事物</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E4%BA%8B%E7%89%A9%E5%BF%85%E9%A1%BB%E6%BB%A1%E8%B6%B3%E7%9A%84%E5%9B%9B%E4%B8%AA%E7%89%B9%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">2、事物必须满足的四个特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%85%B7%E4%BD%93mysql%E6%98%AF%E6%80%8E%E4%B9%88%E5%81%9A%E5%88%B0%E7%9A%84%EF%BC%8C%E6%9C%80%E6%9C%80%E5%BA%95%E5%B1%82%EF%BC%88%E6%8A%A0%E5%88%B0%E7%A5%96%E5%9D%9F%E4%B8%8A%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">3、具体mysql是怎么做到的，最最底层（抠到祖坟上）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-redo-log"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.redo log</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFredo-log"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">什么是redo log</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#redo-log-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">redo log 的作用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#redo-log-%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88%E6%8C%81%E4%B9%85%E6%80%A7%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%89"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">redo log 的实现（持久性的实现）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-undo-log"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.undo log</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-undo-log"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">什么是 undo log</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#undo-log-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">undo log 的作用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#undo-log-%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88%E5%8E%9F%E5%AD%90%E6%80%A7%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%89"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">undo log 的实现（原子性的实现）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-mysql%E9%94%81%E6%8A%80%E6%9C%AF%E5%92%8CMVCC%E5%9F%BA%E7%A1%80"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.mysql锁技术和MVCC基础</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#mysql%E9%94%81%E6%8A%80%E6%9C%AF"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">mysql锁技术</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MVCC%E5%9F%BA%E7%A1%80"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">MVCC基础</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MVCC%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">MVCC实现原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9A%94%E7%A6%BB%E6%80%A7%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">隔离性的实现</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.4.</span> <span class="nav-text">4.事务的实现总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81spring-%E4%B8%AD%E7%9A%84%E4%BA%8B%E5%8A%A1"><span class="nav-number">2.</span> <span class="nav-text">二、spring 中的事务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#spring-%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E7%89%A9%E4%B9%8B%E9%97%B4%E7%9A%84%E8%81%94%E7%B3%BB"><span class="nav-number">2.0.1.</span> <span class="nav-text">spring 和数据库事物之间的联系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%88%86%E7%B1%BB"><span class="nav-number">2.1.</span> <span class="nav-text">1、分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E9%85%8D%E7%BD%AE%EF%BC%88XML%E6%96%B9%E5%BC%8F%EF%BC%89"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.声明式事务配置（XML方式）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E9%85%8D%E7%BD%AE%EF%BC%88-Transactional%E6%B3%A8%E8%A7%A3%E6%96%B9%E5%BC%8F%EF%BC%89"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.声明式事务配置（@Transactional注解方式）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%BC%96%E7%A8%8B%E5%BC%8F%E4%BA%8B%E5%8A%A1"><span class="nav-number">2.1.3.</span> <span class="nav-text">3.编程式事务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="nav-number">2.1.4.</span> <span class="nav-text">区别：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="nav-number">2.2.</span> <span class="nav-text">2、原理：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.3.</span> <span class="nav-text">3、具体实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81spring%E4%BA%8B%E5%8A%A1%E7%9A%84%E4%BC%A0%E6%92%AD%E6%80%A7%E3%80%81%E9%9A%94%E7%A6%BB%E6%80%A7%E3%80%82"><span class="nav-number">2.4.</span> <span class="nav-text">4、spring事务的传播性、隔离性。</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">2.4.1.</span> <span class="nav-text">1.事务的隔离级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BA%8B%E5%8A%A1%E7%9A%84%E4%BC%A0%E6%92%AD%E6%80%A7%EF%BC%9A"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.事务的传播性：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E4%BA%8B%E5%8A%A1%E7%9A%84%E8%B6%85%E6%97%B6%E6%80%A7%E3%80%81%E5%9B%9E%E6%BB%9A%E5%92%8C%E5%8F%AA%E8%AF%BB"><span class="nav-number">2.4.3.</span> <span class="nav-text">3.事务的超时性、回滚和只读</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">2.5.</span> <span class="nav-text">5、注意的地方</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Dawn-yhc"
+      src="https://cdn.jsdelivr.net/gh/weilining/blog.io/images/logo.svg">
+  <p class="site-author-name" itemprop="name">Dawn-yhc</p>
+  <div class="site-description" itemprop="description">JAVA、技术</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0Rhd24teWhjLw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Dawn-yhc&#x2F;"><i class="fab fa-github fa-fw"></i></span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWlsaW5pbmcuZ2l0aHViLmlv" title="https:&#x2F;&#x2F;weilining.github.io">Ln</span>
+        </li>
+    </ul>
+  </div>
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/2021-04-10-gc%E3%80%81oom.html" title="2021-04-10-gc、oom.html">gc类型、内存泄露和内存溢出</a>
+        </li>
+    </ul>
+  </div>
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/weilining/blog.io/js/src/time.js" async="async"></script>
+
+
+<div id="binft"class="links-of-recent-posts motion-element"></div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/weilining/blog.io/js/src/word.js" async="async"></script>
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL0Rhd24teWhjL0Rhd24teWhjLmdpdGh1Yi5pbw==" title="Fork NexT on GitHub" aria-label="Fork NexT on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuhaicheng.xyz/2021-03-23-MySql%E5%92%8CSpring%E4%B8%AD%E4%BA%8B%E7%89%A9%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/weilining/blog.io/images/logo.svg">
+      <meta itemprop="name" content="Dawn-yhc">
+      <meta itemprop="description" content="JAVA、技术">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="曙光苑">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySql和Spring中事物的实现原理<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRodWIuY29tL0Rhd24teWhjL0Rhd24teWhjLmdpdGh1Yi5pby9lZGl0L21haW4vc291cmNlL19wb3N0cy8yMDIxLTAzLTIzLU15U3Fs5ZKMU3ByaW5n5Lit5LqL54mp55qE5a6e546w5Y6f55CGLm1k" title="编辑"><i class="fa fa-pen-nib"></i></span>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-23 11:15:14" itemprop="dateCreated datePublished" datetime="2021-03-23T11:15:14+08:00">2021-03-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-25 11:05:14" itemprop="dateModified" datetime="2021-03-25T11:05:14+08:00">2021-03-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BA%8B%E5%8A%A1/" itemprop="url" rel="index"><span itemprop="name">事务</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>18k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>16 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description"></div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="一、MySql中事物的实现原理"><a href="#一、MySql中事物的实现原理" class="headerlink" title="一、MySql中事物的实现原理"></a>一、MySql中事物的实现原理</h2><h3 id="1、什么是事物"><a href="#1、什么是事物" class="headerlink" title="1、什么是事物"></a>1、什么是事物</h3><p>事务由单独单元的一个或者多个sql语句组成，在这个单元中，每个mysql语句是相互依赖的。而整个单独单元作为一个不可分割的整体，如果单元中某条sql语句一旦执行失败或者产生错误，整个单元将会回滚，也就是所有受到影响的数据将会返回到事务开始以前的状态；如果单元中的所有sql语句均执行成功，则事务才会被顺利执行。</p>
+<p><strong>MySQL默认采用的是自动提交的方式</strong>，也就是说如果不是显示的开始一个事务，则系统会自动向数据库提交结果。在当前连接中，还可以通过设置AUTOCONNIT变量来启用或者禁用自动提交模式。</p>
+<p>正常我们在提交sql时，是有</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">start</span> <span class="keyword">transaction</span>;  </span><br><span class="line">sql...</span><br><span class="line"><span class="keyword">commit</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">#开启</span></span><br><span class="line"><span class="keyword">SET</span> AUTOCOMMIT = <span class="number">1</span>;</span><br><span class="line">关闭自动提交功能后，只用当执行<span class="keyword">COMMIT</span>命令后，MySQL才将数据表中的资料提交到数据库中。如果执行<span class="keyword">ROLLBACK</span>命令，数据将会被回滚。如果不提交事务，而终止MySQL会话，数据库将会自动执行回滚操作。</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、事物必须满足的四个特性"><a href="#2、事物必须满足的四个特性" class="headerlink" title="2、事物必须满足的四个特性"></a>2、事物必须满足的四个特性</h3><ul>
+<li>原子性：一个事务必须被视为不可分割的最小工作单位，一个事务中的所有操作要么全部成功提交，要么全部失败回滚，对于一个事务来说不可能只执行其中的部分操作。</li>
+<li>一致性：一个事务的执行会使数据从一个一致状态切换到另一个一致的状态。</li>
+<li>隔离性：事务一旦提交，其所做的修改会永久保存到数据库中，此时即使系统崩溃修改的数据也不会丢失。</li>
+<li>持久性： 一个事务一旦提交，则会永久的改变数据库的数据</li>
+</ul>
+<p>在mysql中，有很多存储引擎，都是以插件形式存在的，现在较为流行的是innodb存储引擎，他是支持事物的。（实际上支持事务的只有<code>InnoDB</code>跟<code>NDB Cluster</code>）</p>
+<h3 id="3、具体mysql是怎么做到的，最最底层（抠到祖坟上）"><a href="#3、具体mysql是怎么做到的，最最底层（抠到祖坟上）" class="headerlink" title="3、具体mysql是怎么做到的，最最底层（抠到祖坟上）"></a>3、具体mysql是怎么做到的，最最底层（抠到祖坟上）</h3><p>在这里先了解一些概念：</p>
+<h4 id="1-redo-log"><a href="#1-redo-log" class="headerlink" title="1.redo log"></a>1.redo log</h4><h5 id="什么是redo-log"><a href="#什么是redo-log" class="headerlink" title="什么是redo log"></a>什么是redo log</h5><p>redo log叫做重做日志，用来实现事务的持久性。该日志文件由两部分组成：重做日志缓冲（redo log buffer）以及重做日志文件（redo log）,前者是在内存中，后者在磁盘中。<strong>当事务提交之后会把所有<code>修改后的信息</code>存到该日志中。</strong></p>
+<p>注：redo log存在于innodb引擎中。</p>
+<p>流程示例：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">start</span> <span class="keyword">transaction</span>;                                     </span><br><span class="line"><span class="keyword">select</span> balance <span class="keyword">from</span> bank <span class="keyword">where</span> <span class="keyword">name</span>=<span class="string">&quot;zhangsan&quot;</span>;         </span><br><span class="line">// 生成 重做日志 balance=600                                 </span><br><span class="line"><span class="keyword">update</span> bank <span class="keyword">set</span> balance = balance - <span class="number">400</span>;                </span><br><span class="line">// 生成 重做日志 amount=400                               </span><br><span class="line"><span class="keyword">update</span> finance <span class="keyword">set</span> amount = amount + <span class="number">400</span>;          </span><br><span class="line"><span class="keyword">commit</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="D:\SoftwareInstallation\Typora\file\记事本\pictures\ds.jpg" alt="ds" loading="lazy"></p>
+<h5 id="redo-log-的作用"><a href="#redo-log-的作用" class="headerlink" title="redo log 的作用"></a>redo log 的作用</h5><p>mysql 为了提升性能不会把每次的修改都实时同步到磁盘，而是会先存到Buffer Pool(缓冲池)里头，把这个当作缓存来用。然后使用后台线程去做缓冲池和磁盘之间的同步。</p>
+<p>那么，如果数据同步之前宕机宕机或断电了怎么办？未来得及执行上面图中红色的操作。这样会导致丢部分已提交事务的修改信息！</p>
+<p>所以引入了redo log来记录已成功提交事务的修改信息，并且会把redo log持久化到磁盘，系统重启之后在读取redo log恢复最新数据。</p>
+<h5 id="redo-log-的实现（持久性的实现）"><a href="#redo-log-的实现（持久性的实现）" class="headerlink" title="redo log 的实现（持久性的实现）"></a>redo log 的实现（持久性的实现）</h5><p>先了解一下MySQL的数据存储机制，MySQL的表数据是存放在磁盘上的，因此想要存取的时候都要经历磁盘IO,然而即使是使用SSD磁盘IO也是非常消耗性能的。为此，为了提升性能InnoDB提供了缓冲池(Buffer Pool)，Buffer Pool中包含了磁盘数据页的映射，可以当做缓存来使用：</p>
+<blockquote>
+<p><strong>读数据</strong>：会首先从缓冲池中读取，如果缓冲池中没有，则从磁盘读取再放入缓冲池；</p>
+<p><strong>写数据</strong>：会首先写入缓冲池，缓冲池中的数据会定期同步到磁盘中；</p>
+</blockquote>
+<p>上面这种缓冲池的措施虽然在性能方面带来了质的飞跃，但是它也带来了新的问题，当MySQL系统宕机，断电的时候可能会丢数据！</p>
+<p>因为我们的数据已经提交了，但此时是在缓冲池里头，还没来得及在磁盘持久化，所以我们急需一种机制需要存一下已提交事务的数据，为恢复数据使用。redo log就派上用处了。</p>
+<p>既然redo log也需要存储，也涉及磁盘IO为啥还用上面的方式呢？</p>
+<blockquote>
+<p>（1）redo log 的存储是顺序存储，而缓存同步是随机操作。</p>
+<p>（2）缓存同步是以数据页为单位的，每次传输的数据量大于redo log。</p>
+</blockquote>
+<p><strong>总结：</strong></p>
+<p>redo log是用来恢复数据的 用于保障已提交事务的持久化特性。</p>
+<h4 id="2-undo-log"><a href="#2-undo-log" class="headerlink" title="2.undo log"></a>2.undo log</h4><h5 id="什么是-undo-log"><a href="#什么是-undo-log" class="headerlink" title="什么是 undo log"></a>什么是 undo log</h5><p>undo log 叫做回滚日志，用于<strong>记录数据被修改前的信息</strong>。与重做日志所记录的数据相反，重做日志记录数据被修改后的信息。undo log主要记录的是数据的逻辑变化，为了在发生错误时回滚之前的操作，需要将之前的操作都记录下来，然后在发生错误时才可以回滚。</p>
+<p><img data-src="D:\SoftwareInstallation\Typora\file\记事本\pictures\sdd.jpg" alt="sdd" loading="lazy"></p>
+<h5 id="undo-log-的作用"><a href="#undo-log-的作用" class="headerlink" title="undo log 的作用"></a>undo log 的作用</h5><p>undo log 记录事务修改之前版本的数据信息，因此假如由于系统错误或者rollback操作而回滚的话可以根据undo log的信息来进行回滚到没被修改前的状态。</p>
+<h5 id="undo-log-的实现（原子性的实现）"><a href="#undo-log-的实现（原子性的实现）" class="headerlink" title="undo log 的实现（原子性的实现）"></a>undo log 的实现（原子性的实现）</h5><p>undo log记录了数据被修改前的信息以及新增和被删除的数据信息，根据undo log生成回滚语句，如:</p>
+<ul>
+<li>如果你在执行了一个insert语句，那么此时在Undo log日志中，对这个操作记录的回滚日志就生成对应的delete操作。</li>
+<li> 如果你你要执行的是delete操作，那么要把你删除的那条数据数据记录下来，如果要回滚，就应该执行一个insert操作把那条数据插入回去。</li>
+<li>如果你要是执行的是update语句，那么你要把你更新之前的那个值记录下来，回滚的时候重新update一下，把你之前更新前的旧值给他更新回去。</li>
+</ul>
+<p>所以：</p>
+<ol>
+<li>每条数据变更(insert/update/delete)操作都伴随一条undo log的生成,<strong>并且回滚日志必须先于数据持久化到磁盘上</strong></li>
+<li>所谓的回滚就是根据回滚日志做逆向操作，比如delete的逆向操作为insert，insert的逆向操作为delete，update的逆向为update等。</li>
+</ol>
+<p><strong>总结：</strong></p>
+<p>undo log是用来回滚数据的用于保障 未提交事务的原子性</p>
+<p>所谓回滚操作就是当发生错误异常或者显式的执行rollback语句时需要把数据还原到原先的模样</p>
+<blockquote>
+<p>正确理解回滚：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">//创建表：</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`test`</span> (</span><br><span class="line"><span class="string">`f1`</span>  <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> ,</span><br><span class="line"><span class="string">`f2`</span>  <span class="built_in">varchar</span>(<span class="number">11</span>)  <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> ,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`f1`</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span></span><br><span class="line"></span><br><span class="line">//执行事务：</span><br><span class="line"><span class="keyword">START</span> <span class="keyword">TRANSACTION</span>;</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">test</span> <span class="keyword">VALUES</span>    (<span class="number">1</span>, <span class="string">&#x27;2&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">test</span> <span class="keyword">VALUES</span>    (<span class="number">1</span>, <span class="string">&#x27;3&#x27;</span>);</span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这时已经开启了一个事务，并且已经执行了一条正确的插入语句，虽然没有体现在数据库中，但如果以后在该连接中又执行了一条commit 或begin或start transaction（新开一个事务会将该链接中的其他未提交的事务提交，相当于commit！）你会发现已经将刚才的INSERT INTO test_tab VALUES (1, &#39;2&#39;);写进了数据库。</p>
+<p> <strong>正确的理解应该是，如果事务中所有sql语句执行正确则需要自己手动提交commit；否则有任何一条执行错误，需要自己提交一条<u>rollback</u>，这时会回滚所有操作，而不是<u>commit</u>会给你自动判断和回滚。</strong></p>
+</blockquote>
+<h4 id="3-mysql锁技术和MVCC基础"><a href="#3-mysql锁技术和MVCC基础" class="headerlink" title="3.mysql锁技术和MVCC基础"></a>3.mysql锁技术和MVCC基础</h4><h5 id="mysql锁技术"><a href="#mysql锁技术" class="headerlink" title="mysql锁技术"></a>mysql锁技术</h5><p>当有多个请求来读取表中的数据时可以不采取任何操作，但是多个请求里有读请求，又有修改请求时必须有一种措施来进行并发控制。不然很有可能会造成不一致。</p>
+<p><strong>读写锁</strong></p>
+<p>解决上述问题很简单，只需用两种锁的组合来对读写请求进行控制即可</p>
+<blockquote>
+<ol>
+<li>共享锁(shared lock),又叫做&quot;读锁&quot;，读锁是可以共享的，或者说多个读请求可以共享一把锁读数据，不会造成阻塞。</li>
+<li>排他锁(exclusive lock),又叫做&quot;写锁&quot;，写锁会排斥其他所有获取锁的请求，一直阻塞，直到写入完成释放锁。</li>
+</ol>
+<p>通过读写锁，可以做到并行读操作，但是不能做到写读，并行写操作</p>
+</blockquote>
+<p><strong>总结：</strong></p>
+<blockquote>
+<p>事务的隔离性通过<strong>读写锁</strong>来实现！</p>
+</blockquote>
+<h5 id="MVCC基础"><a href="#MVCC基础" class="headerlink" title="MVCC基础"></a>MVCC基础</h5><blockquote>
+<p>MVCC (MultiVersion Concurrency Control) 叫做多版本并发控制。是用来在数据库中控制并发的方法，实现对数据库的并发访问用的。在MySQL中，MVCC只在读取已提交（Read Committed）和可重复读（Repeatable Read）两个事务级别下有效。其是通过Undo日志中的版本链和ReadView一致性视图来实现的。MVCC就是在多个事务同时存在时，SELECT语句找寻到具体是版本链上的哪个版本，然后在找到的版本上返回其中所记录的数据的过程。</p>
+<p>他的主要实现思想是通过数据多版本来做到读写分离。从而实现不加锁读进而做到读写并行。</p>
+<p>MVCC在mysql中的实现依赖的是undo log与read view</p>
+<ul>
+<li>undo log :undo log 中记录某行数据的多个版本的数据。</li>
+<li>read view :用来判断当前版本数据的可见性</li>
+</ul>
+</blockquote>
+<h5 id="MVCC实现原理"><a href="#MVCC实现原理" class="headerlink" title="MVCC实现原理"></a>MVCC实现原理</h5><p>在MySQL中，MVCC只在读取已提交（Read Committed）和可重复读（Repeatable Read）两个事务级别下有效。其是通过Undo日志中的版本链和ReadView一致性视图来实现的。MVCC就是在多个事务同时存在时，SELECT语句找寻到具体是版本链上的哪个版本，然后在找到的版本上返回其中所记录的数据的过程。</p>
+<p>1、首先需要知道的是，在MySQL中，会默认为我们的表后面添加三个隐藏字段：</p>
+<blockquote>
+<p><strong>DB_ROW_ID</strong>：行ID，MySQL的B+树索引特性要求每个表必须要有一个主键。如果没有设置的话，会自动寻找第一个不包含NULL的唯一索引列作为主键。如果还是找不到，就会在这个DB_ROW_ID上自动生成一个唯一值，以此来当作主键（该列和MVCC的关系不大）；<br><strong>DB_TRX_ID</strong>：事务ID，记录的是当前事务在做INSERT或UPDATE语句操作时的事务ID（DELETE语句被当做是UPDATE语句的特殊情况，后面会进行说明）<strong>所以事务ID是执行一条更新操作（增删改）的语句后才会生成；</strong><br><strong>DB_ROLL_PTR</strong>：回滚指针，通过它可以将不同的版本串联起来，形成版本链。相当于链表的next指针。</p>
+</blockquote>
+<p>2 、ReadView</p>
+<blockquote>
+<p>ReadView一致性视图主要是由两部分组成：</p>
+<p>所有未提交事务的ID数组 和 已经创建的最大事务ID组成（实际上ReadView还有其他的字段，但不影响这里对MVCC的讲解）。比如：[100,200],300。事务100和200是当前未提交的事务，而事务300是当前创建的最大事务（已经提交了）。</p>
+<p>当<strong>执行</strong>SELECT语句的时候会创建<strong>ReadView</strong></p>
+<p>但是<strong>在读取已提交和可重复读两个事务级别下，生成ReadView的策略是不一样的</strong>： 在一个事务的前提下</p>
+<p>读取已提交级别是<strong>每执行一次</strong>SELECT语句就会重新生成一份ReadView，而可重复读级别是<strong>只会在第一次</strong>SELECT语句执行的时候会生成一份，后续的SELECT语句会沿用之前生成的ReadView（即使后面有更新语句的话，也会继续沿用）。</p>
+</blockquote>
+<p>3 、版本链</p>
+<blockquote>
+<p>所有版本的数据都只会存一份，然后通过回滚指针连接起来，之后就是通过一定的规则找到具体是哪个版本上的数据就行了。</p>
+</blockquote>
+<h5 id="隔离性的实现"><a href="#隔离性的实现" class="headerlink" title="隔离性的实现"></a>隔离性的实现</h5><p>隔离性是事务ACID特性里最复杂的一个。在SQL标准里定义了四种隔离级别，每一种级别都规定一个事务中的修改，哪些是事务之间可见的，哪些是不可见的。</p>
+<p>级别越低的隔离级别可以执行越高的并发，但同时实现复杂度以及开销也越大。</p>
+<p>MySQL隔离级别有以下四种（级别由低到高）：</p>
+<blockquote>
+<ol>
+<li>READUNCOMMITED(未提交读)</li>
+<li>READCOMMITED(已提交读)</li>
+<li>REPEATABLEREAD(可重复读)</li>
+<li>SERIALIZABLE (串行化)</li>
+</ol>
+</blockquote>
+<p>只要彻底理解了隔离级别以及他的实现原理就相当于理解了ACID里的隔离型。前面说过原子性，隔离性，持久性的目的都是为了要做到一致性，但隔离型跟其他两个有所区别，原子性和持久性是为了要实现数据的可性保障靠，比如要做到宕机后的恢复，以及错误后的回滚。</p>
+<p>那么隔离性是要做到什么呢？ 隔离性是要管理<strong>多个并发读写请求的访问顺序</strong>。 这种顺序包括串行或者是并行</p>
+<p>说明一点，写请求不仅仅是指insert操作，又包括update操作。</p>
+<p><img data-src="D:\SoftwareInstallation\Typora\file\记事本\pictures\format,png" alt="img" loading="lazy"></p>
+<p>总之，从隔离性的实现可以看出这是一场数据的<strong>可靠性与性能之间的权衡</strong>：</p>
+<blockquote>
+<p>可靠性性高的，并发性能低(比如Serializable)。可靠性低的，并发性能高(比如 Read Uncommited)</p>
+</blockquote>
+<p><strong>READ UNCOMMITTED</strong></p>
+<blockquote>
+<p>在READ UNCOMMITTED隔离级别下，事务中的修改即使还没提交，对其他事务是可见的。事务可以读取未提交的数据，造成脏读。</p>
+<p>因为读不会加任何锁，所以写操作在读的过程中修改数据，所以会造成脏读。好处是可以提升并发处理性能，能做到读写并行。</p>
+<p>换句话说，读的操作不能排斥写请求。</p>
+</blockquote>
+<p><img data-src="D:\SoftwareInstallation\Typora\file\记事本\pictures\formaddt,png" alt="img" loading="lazy"></p>
+<blockquote>
+<p>优点：读写并行，性能高</p>
+<p>缺点：造成脏读</p>
+</blockquote>
+<p><strong>READ COMMITTED</strong></p>
+<blockquote>
+<p>一个事务的修改在他提交之前的所有修改，对其他事务都是不可见的。其他事务能读到已提交的修改变化。在很多场景下这种逻辑是可以接受的。</p>
+<p>InnoDB在 READ COMMITTED，<strong>写数据使用排它锁,读取数据不加锁而是使用了MVCC机制</strong>。或者换句话说他采用了读写分离机制。</p>
+<p>但是该级别会产生不可重读以及幻读问题。</p>
+</blockquote>
+<p><strong>什么是不可重读？</strong></p>
+<blockquote>
+<p>在一个事务内多次读取的结果不一样。</p>
+</blockquote>
+<p><strong>为什么会产生不可重复读？</strong></p>
+<blockquote>
+<p>这跟 READ COMMITTED 级别下的MVCC机制有关系，在该隔离级别下每次 select的时候新生成一个版本号，所以每次select的时候读的不是一个副本而是不同的副本。</p>
+<p>在每次select之间有其他事务更新了我们读取的数据并提交了，那就出现了不可重复读</p>
+<p>REPEATABLE READ(Mysql默认隔离级别)</p>
+<p>在一个事务内的多次读取的结果是一样的。这种级别下可以避免，脏读，不可重复读等查询问题。mysql 有两种机制可以达到这种隔离级别的效果，分别是采用读写锁以及MVCC。</p>
+</blockquote>
+<p><strong>采用读写锁实现：</strong></p>
+<p><img data-src="D:\SoftwareInstallation\Typora\file\记事本\pictures\formssat,png" alt="img" loading="lazy"></p>
+<p>为什么能可重复读？只要没释放读锁，在次读的时候还是可以读到第一次读的数据。</p>
+<blockquote>
+<p>优点：实现起来简单</p>
+<p>缺点：无法做到读写并行</p>
+</blockquote>
+<p><strong>采用MVCC实现：</strong></p>
+<p><img data-src="D:\SoftwareInstallation\Typora\file\记事本\pictures\forssssmat,png" alt="img" loading="lazy"></p>
+<p>为什么能可重复读？因为多次读取只生成一个版本，读到的自然是相同数据。</p>
+<blockquote>
+<p>优点：读写并行</p>
+<p>缺点：实现的复杂度高</p>
+</blockquote>
+<p>但是在该隔离级别下仍会存在幻读的问题。</p>
+<p><strong>SERIALIZABLE</strong></p>
+<p>该隔离级别理解起来最简单，实现也最简单。在隔离级别下除了不会造成数据不一致问题，没其他优点。</p>
+<p><img data-src="D:\SoftwareInstallation\Typora\file\记事本\pictures\fggormat,png" alt="img" loading="lazy"></p>
+<h4 id="4-事务的实现总结"><a href="#4-事务的实现总结" class="headerlink" title="4.事务的实现总结"></a>4.事务的实现总结</h4><p>前面讲的重做日志，回滚日志以及锁技术就是实现事务的基础。</p>
+<blockquote>
+<ul>
+<li>事务的原子性是通过undo log来实现。</li>
+<li>事务的持久性性是通过redo log来实现</li>
+<li>事务的隔离性是通过(读写锁+MVCC)来实现</li>
+<li><strong>事务的一致性是通过原子性，持久性，隔离性共同实现</strong></li>
+</ul>
+</blockquote>
+<p>原子性，持久性，隔离性的目的也是为了保障数据的一致性！</p>
+<p>总之，ACID只是个概念，事务最终目的是要保障数据的可靠性，一致性。</p>
+<h2 id="二、spring-中的事务"><a href="#二、spring-中的事务" class="headerlink" title="二、spring 中的事务"></a>二、spring 中的事务</h2><h4 id="spring-和数据库事物之间的联系"><a href="#spring-和数据库事物之间的联系" class="headerlink" title="spring 和数据库事物之间的联系"></a>spring 和数据库事物之间的联系</h4><p><strong>spring的事务是建立在数据库的事务支持上的，如果你选择的数据库引擎不支持事务，如mysql的MyISAM引擎不支持事务，那么spring的事务也不会生效。</strong></p>
+<p>具体内容是spring对事务传播行为和隔离级别的二次封装，因为不同项目可能在一个mysql的不同数据库上，所以可以在项目中配置数据库的传播行为和隔离级别。</p>
+<h3 id="1、分类"><a href="#1、分类" class="headerlink" title="1、分类"></a>1、分类</h3><h4 id="1-声明式事务配置（XML方式）"><a href="#1-声明式事务配置（XML方式）" class="headerlink" title="1.声明式事务配置（XML方式）"></a>1.声明式事务配置（XML方式）</h4><ul>
+<li><p>1-pom文件中，添加 AOP Aspectj 的支持</p>
+</li>
+<li><p>2-准备给deleteUser()增加事务操作</p>
+</li>
+<li><p>3-Spring配置文件中，配置声明式事务管理器 DataSourceTransactionManager</p>
+</li>
+<li><p>4-配置事务通知 ，“确定为哪个/哪些方法配置事务”</p>
+</li>
+<li><p>5-配置事务切入，“确定切入点（哪个类）”</p>
+</li>
+<li><p>6-测试</p>
+</li>
+</ul>
+<h4 id="2-声明式事务配置（-Transactional注解方式）"><a href="#2-声明式事务配置（-Transactional注解方式）" class="headerlink" title="2.声明式事务配置（@Transactional注解方式）"></a>2.声明式事务配置（@Transactional注解方式）</h4><ul>
+<li><p>1-在deleteUser()上增加@Transactional注解</p>
+</li>
+<li><p>2-pom文件里，启用事务注解</p>
+</li>
+</ul>
+<h4 id="3-编程式事务"><a href="#3-编程式事务" class="headerlink" title="3.编程式事务"></a>3.编程式事务</h4><ul>
+<li><p>1-pom引入driver和DataSource</p>
+</li>
+<li><p>2-编程式事务内核：在代码中侵入式控制事务</p>
+</li>
+</ul>
+<p>声明式（注解配置）：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- 注册事务管理类，Spring 基于数据源的事务管理器 --&gt;</span><br><span class="line">    &lt;bean id&#x3D;&quot;transactionManager&quot;</span><br><span class="line">        class&#x3D;&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;</span><br><span class="line">        &lt;property name&#x3D;&quot;dataSource&quot; ref&#x3D;&quot;dataSource&quot; &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 以 @Transactional 标注来定义事务 --&gt;</span><br><span class="line">&lt;!-- 启用annotation的事务支持  --&gt;</span><br><span class="line">&lt;tx:annotation-driven transaction-manager&#x3D;&quot;transactionManager&quot;  proxy-target-class&#x3D;&quot;true&quot; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h4><ul>
+<li>声明式事务：非侵入式，本质是AOP，推荐！</li>
+<li>编程式事务：侵入式，需要在代码中调用 commit()、rollback()等事务管方法，还需要在代码中通过try catch，不推荐！</li>
+</ul>
+<p>优缺点：</p>
+<p>声明式事务最大的优点就是不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明或通过@Transactional注解的方式，便可以将事务规则应用到业务逻辑中，减少业务代码的污染。</p>
+<p>唯一不足地方是，最细粒度只能作用到方法级别，无法做到像编程式事务那样可以作用到代码块级别。</p>
+<h3 id="2、原理："><a href="#2、原理：" class="headerlink" title="2、原理："></a>2、原理：</h3><p>Spring的事务管理机制实现的原理，是通过<strong>通过AOP的方式被织入</strong>了我们的业务逻辑中的，AOP的实现机制有两种：Proxy-based和Weaving-based。前者是依赖动态代理的方式达到对代理类增强的目的。后者应该是通过字节码增强的方式达到增强的目的。</p>
+<p>常用的就是通过这样一个动态代理对所有需要事务管理的Bean进行加载，并根据配置在invoke方法中对当前调用的 方法名进行判定，并在method.invoke方法前后为其加上合适的事务管理代码，这样就实现了Spring式的事务管理。Spring中的AOP实 现更为复杂和灵活，不过基本原理是一致的。</p>
+<h3 id="3、具体实现"><a href="#3、具体实现" class="headerlink" title="3、具体实现"></a>3、具体实现</h3><p>在serviceImpl类中方法上的使用，</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="meta">@Transactional</span> <span class="comment">//默认是遇到运行时异常回滚，调用rollbackfor,mysqlde rollback</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">create</span><span class="params">(FoBasicInfo foBasicInfo)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> rows = foBasicInfoMapper.insert(foBasicInfo);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(rows != <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;新增异常&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、spring事务的传播性、隔离性。"><a href="#4、spring事务的传播性、隔离性。" class="headerlink" title="4、spring事务的传播性、隔离性。"></a>4、spring事务的传播性、隔离性。</h3><p><strong>事务的传播性、隔离性级别一般设置在service层。</strong></p>
+<p><strong>@Transactional</strong><br>（1）这里说明一下，有的把这个注解放在类名称上面了，这样你配置的这个@Transactional 对这个类中的所有public方法都起作用.<br>（2）@Transactional 方法方法名上，只对这个方法有作用，同样必须是public的方法</p>
+<p>我们在使用Spring声明式事务时，有一个非常重要的概念就是事务的属性。事务属性通常由事务的传播行为、事务的隔离级别、事务的超时值和事务的只读标识组成。我们在进行事务划分时，需要进行事务定义，也就是配置事务的属性。</p>
+<p>Spring在TransactionDefinition接口中定义这些属性,以供PlatfromTransactionManager使用, PlatfromTransactionManager是spring事务管理的核心接口。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">TransactionDefinition  </span><br><span class="line">public interface TransactionDefinition &#123;  </span><br><span class="line">    int getPropagationBehavior();  </span><br><span class="line">    int getIsolationLevel();  </span><br><span class="line">    int getTimeout();  </span><br><span class="line">    boolean isReadOnly();  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>getTimeout()方法，它返回事务必须在多少秒内完成。<br>isReadOnly(),事务是否只读，事务管理器能够根据这个返回值进行优化，确保事务是只读的。<br>getIsolationLevel()方法返回事务的隔离级别，事务管理器根据它来控制另外一个事务可以看到本事务内的哪些数据。</p>
+<p>getPropagationBehavior()返回事务的传播行为，由是否有一个活动的事务来决定一个事务调用。</p>
+<h4 id="1-事务的隔离级别"><a href="#1-事务的隔离级别" class="headerlink" title="1.事务的隔离级别"></a>1.事务的隔离级别</h4><p>在TransactionDefinition接口中定义了五个不同的事务隔离级别 ：<br><strong>（a）</strong> ISOLATION_DEFAULT：（PlatfromTransactionManager的）默认的隔离级别。使用数据库默认的事务隔离级别。另外四个与JDBC的隔离级别相对应 。<br><strong>（b）</strong>ISOLATION_READ_UNCOMMITTED：这是事务最低的隔离级别，它充许别外一个事务可以看到这个事务未提交的数据。这种隔离级别会产生脏读，不可重复读和幻像读。<br>例如：<br>Mary的原工资为1000,财务人员将Mary的工资改为了8000，但未提交事务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Connection con1 &#x3D; getConnection();  </span><br><span class="line">con.setAutoCommit(false);  </span><br><span class="line">update employee set salary &#x3D; 8000 where empId &#x3D;&quot;Mary&quot;; </span><br></pre></td></tr></table></figure>
+
+<p>与此同时，Mary正在读取自己的工资 。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Connection con2 &#x3D; getConnection();  </span><br><span class="line">select  salary from employee where empId &#x3D;&quot;Mary&quot;;  </span><br><span class="line">con2.commit();</span><br></pre></td></tr></table></figure>
+
+<p>Mary发现自己的工资变为了8000，欢天喜地！<br>而财务发现操作有误，而回滚了事务,Mary的工资又变为了1000 。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">con1.rollback(); 12</span><br></pre></td></tr></table></figure>
+
+<p>像这样,Mary记取的工资数8000是一个脏数据。</p>
+<p><strong>（c）</strong>ISOLATION_READ_COMMITTED： 保证一个事务修改的数据提交后才能被另外一个事务读取。另外一个事务不能读取该事务未提交的数据。这种事务隔离级别可以避免脏读出现，但是可能会出现不可重复读和幻像读。</p>
+<p><strong>（d）</strong>ISOLATION_REPEATABLE_READ ： 这种事务隔离级别可以防止脏读，不可重复读。但是可能出现幻像读。它除了保证一个事务不能读取另一个事务未提交的数据外，还保证了避免下面的情况产生(不可重复读)。</p>
+<p>例如：<br>在事务1中，Mary 读取了自己的工资为1000,操作并没有完成 ：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">con1 &#x3D; getConnection();  </span><br><span class="line">select salary from employee empId &#x3D;&quot;Mary&quot;;  </span><br></pre></td></tr></table></figure>
+
+<p>在事务2中，这时财务人员修改了Mary的工资为2000,并提交了事务.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">con2 &#x3D; getConnection();  </span><br><span class="line">update employee set salary &#x3D; 2000;  </span><br><span class="line">con2.commit();  </span><br></pre></td></tr></table></figure>
+
+<p>在事务1中，Mary 再次读取自己的工资时，工资变为了2000</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select salary from employee empId &#x3D;&quot;Mary&quot;;  </span><br></pre></td></tr></table></figure>
+
+<p>在一个事务中前后两次读取的结果并不致，导致了不可重复读。<br>使用ISOLATION_REPEATABLE_READ可以避免这种情况发生。</p>
+<p><strong>（e）</strong>ISOLATION_SERIALIZABLE 这是花费最高代价但是最可靠的事务隔离级别。事务被处理为顺序执行。除了防止脏读，不可重复读外，还避免了幻像读。</p>
+<p>目前工资为1000的员工有10人。<br>事务1,读取所有工资为1000的员工。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">con1 &#x3D; getConnection();  </span><br><span class="line">Select * from employee where salary &#x3D;1000; </span><br></pre></td></tr></table></figure>
+
+<p>共读取10条记录</p>
+<p>这时另一个事务向employee表插入了一条员工记录，工资也为1000</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">con2 &#x3D; getConnection();  </span><br><span class="line">Insert into employee(empId,salary) values(&quot;Lili&quot;,1000);  </span><br><span class="line">con2.commit();  </span><br></pre></td></tr></table></figure>
+
+<p>事务1再次读取所有工资为1000的员工</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from employee where salary &#x3D;1000;  </span><br></pre></td></tr></table></figure>
+
+<p>共读取到了11条记录，这就产生了幻像读。<br>ISOLATION_SERIALIZABLE能避免这样的情况发生。但是这样也耗费了最大的资源。</p>
+<h4 id="2-事务的传播性："><a href="#2-事务的传播性：" class="headerlink" title="2.事务的传播性："></a>2.事务的传播性：</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PROPAGATION_REQUIRED 支持当前事务，如果不存在，就新建一个(默认)</span><br><span class="line"></span><br><span class="line">PROPAGATION_SUPPORTS 支持当前事务，如果不存在，就以非事务的方式</span><br><span class="line"></span><br><span class="line">PROPAGATION_MANDATORY 支持当前事务，如果不存在，抛出异常</span><br><span class="line"></span><br><span class="line">PROPAGATION_REQUIRES_NEW  总是开启一个新的事务，挂起当前事务，创建一个新的事务</span><br><span class="line"></span><br><span class="line">PROPAGATION_NOT_SUPPORTED 以非事务方式运行，如果有事务存在，挂起当前事务</span><br><span class="line"></span><br><span class="line">PROPAGATION_NEVER 以非事务方式运行，如果有事务存在，抛出异常</span><br><span class="line"></span><br><span class="line">PROPAGATION_NESTED 如果当前事务存在，则嵌套事务执行</span><br></pre></td></tr></table></figure>
+
+<p>在TransactionDefinition接口中定义了七个事务传播行为。</p>
+<p>假如我写了两个service类。名字分别为ServiceA和ServiceB。如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@Service(&quot;ServiceA&quot;)</span><br><span class="line">public class ServiceA &#123;</span><br><span class="line"></span><br><span class="line">    @Resource(name&#x3D;&quot;ServiceB&quot;)</span><br><span class="line">    private ServiceB serviceB;</span><br><span class="line"></span><br><span class="line">    @Transactional(propagation&#x3D;Propagation.REQUIRED)</span><br><span class="line">    public methodA()&#123;</span><br><span class="line">       &#x2F;&#x2F;doSomething</span><br><span class="line">       serviceB.methodB(); </span><br><span class="line">       &#x2F;&#x2F;doSomething</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Service(&quot;ServiceB&quot;)</span><br><span class="line">public class ServiceB &#123;</span><br><span class="line"></span><br><span class="line">    @Transactional(propagation&#x3D;Propagation.REQUIRED)</span><br><span class="line">    public methodB()&#123;</span><br><span class="line">       &#x2F;&#x2F;doSomething</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用spring声明式事务，spring使用AOP来支持声明式事务，会根据事务属性，自动在方法调用之前决定是否开启一个事务，并在方法执行之后决定事务提交或回滚事务。</p>
+<p><strong>（a）</strong>PROPAGATION_REQUIRED：如果存在一个事务，则支持当前事务。如果没有事务则开启一个新的事务。<br>如果单独调用serviceB.methodB方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main &#123;</span><br><span class="line">   serviceB.methodB();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>相当于：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Main&#123;  </span><br><span class="line">  Connection con&#x3D;null;  </span><br><span class="line">  try&#123;  </span><br><span class="line">      con &#x3D; getConnection();  </span><br><span class="line">      con.setAutoCommit(false);  </span><br><span class="line">      &#x2F;&#x2F;方法调用  </span><br><span class="line">      methodB();  </span><br><span class="line">      &#x2F;&#x2F;提交事务  </span><br><span class="line">      con.commit();  </span><br><span class="line"> &#125;Catch(RuntimeException ex)&#123;  </span><br><span class="line">    &#x2F;&#x2F;回滚事务  </span><br><span class="line">    con.rollback();    </span><br><span class="line"> &#125;finally&#123;  </span><br><span class="line">    &#x2F;&#x2F;释放资源  </span><br><span class="line">    closeCon();  </span><br><span class="line"> &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Spring保证在methodB方法中所有的调用都获得到一个相同的连接。在调用methodB时，没有一个存在的事务，所以获得一个新的连接，开启了一个新的事务。</p>
+<p>如果单独调用MethodA时，在MethodA内又会调用MethodB.<br>执行效果相当于：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main&#123;  </span><br><span class="line">   Connection con &#x3D; null;  </span><br><span class="line">   try&#123;  </span><br><span class="line">      con &#x3D; getConnection();  </span><br><span class="line">      methodA();  </span><br><span class="line">      con.commit();  </span><br><span class="line">   &#125;cathc(RuntimeException ex)&#123;  </span><br><span class="line">      con.rollback();  </span><br><span class="line">   &#125;finally&#123;  </span><br><span class="line">      closeCon();  </span><br><span class="line">   &#125;   </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>调用MethodA时，环境中没有事务，所以开启一个新的事务.<br>当在MethodA中调用MethodB时，环境中已经有了一个事务，所以methodB就加入当前事务。</p>
+<p><strong>（b）</strong>PROPAGATION_SUPPORTS ：如果存在一个事务，支持当前事务。如果没有事务，则非事务的执行。但是对于事务同步的事务管理器，PROPAGATION_SUPPORTS与不使用事务有少许不同。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;事务属性 PROPAGATION_REQUIRED   </span><br><span class="line">methodA()&#123;  </span><br><span class="line">  serviceB.methodB();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;事务属性 PROPAGATION_SUPPORTS   </span><br><span class="line">methodB()&#123;  </span><br><span class="line">  ……  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>单纯的调用methodB时，methodB方法是非事务的执行的。<br>当调用methdA时,methodB则加入了methodA的事务中,事务地执行。</p>
+<p><strong>（c）</strong>PROPAGATION_MANDATORY ：如果已经存在一个事务，支持当前事务。如果没有一个活动的事务，则抛出异常。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;事务属性 PROPAGATION_REQUIRED   </span><br><span class="line">methodA()&#123;  </span><br><span class="line">  serviceB.methodB();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;事务属性 PROPAGATION_MANDATORY   </span><br><span class="line">methodB()&#123;  </span><br><span class="line">  ……  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>当单独调用methodB时，因为当前没有一个活动的事务，则会抛出异常<br>throw new IllegalTransactionStateException(“Transaction propagation ‘mandatory’ but no existing transaction found”);</p>
+<p>当调用methodA时，methodB则加入到methodA的事务中，事务地执行。</p>
+<p><strong>（d）</strong>PROPAGATION_REQUIRES_NEW ：如果一个事务已经存在，则将这个存在的事务挂起。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;事务属性 PROPAGATION_REQUIRED   </span><br><span class="line">methodA()&#123;  </span><br><span class="line">   doSomeThingA();  </span><br><span class="line">   serviceB.methodB();  </span><br><span class="line">   doSomeThingB();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;事务属性 PROPAGATION_REQUIRES_NEW   </span><br><span class="line">methodB()&#123;  </span><br><span class="line">  ……  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>当单独调用methodB时，相当于把methodb声明为REQUIRED。开启一个新的事务，事务地执行。</p>
+<p>当调用methodA时：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main()&#123;  </span><br><span class="line">  methodA();  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>情况就大不一样了，相当于下面的效果。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main()&#123;  </span><br><span class="line"> TransactionManager tm &#x3D; null;  </span><br><span class="line"> try&#123;  </span><br><span class="line">  &#x2F;&#x2F;获得一个JTA事务管理器  </span><br><span class="line">   tm &#x3D; getTransactionManager();  </span><br><span class="line">   tm.begin();&#x2F;&#x2F;开启一个新的事务  </span><br><span class="line">   Transaction ts1 &#x3D; tm.getTransaction();  </span><br><span class="line">   doSomeThing();  </span><br><span class="line">   tm.suspend();&#x2F;&#x2F;挂起当前事务  </span><br><span class="line">   try&#123;  </span><br><span class="line">     tm.begin();&#x2F;&#x2F;重新开启第二个事务  </span><br><span class="line">     Transaction ts2 &#x3D; tm.getTransaction();  </span><br><span class="line">     methodB();  </span><br><span class="line">     ts2.commit();&#x2F;&#x2F;提交第二个事务  </span><br><span class="line"></span><br><span class="line">   &#125;Catch(RunTimeException ex)&#123;  </span><br><span class="line">     ts2.rollback();&#x2F;&#x2F;回滚第二个事务  </span><br><span class="line">   &#125;finally&#123;  </span><br><span class="line">    &#x2F;&#x2F;释放资源  </span><br><span class="line">   &#125;  </span><br><span class="line">   &#x2F;&#x2F;methodB执行完后，复恢第一个事务  </span><br><span class="line">   tm.resume(ts1);  </span><br><span class="line">   doSomeThingB();  </span><br><span class="line">   ts1.commit();&#x2F;&#x2F;提交第一个事务  </span><br><span class="line"> &#125;catch(RunTimeException ex)&#123;  </span><br><span class="line">  ts1.rollback();&#x2F;&#x2F;回滚第一个事务  </span><br><span class="line"> &#125;finally&#123;  </span><br><span class="line">  &#x2F;&#x2F;释放资源  </span><br><span class="line"> &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>在这里，我把ts1称为外层事务，ts2称为内层事务。从上面的代码可以看出，ts2与ts1是两个独立的事务，互不相干。Ts2是否成功并不依赖于ts1。如果methodA方法在调用methodB方法后的doSomeThingB方法失败了，而methodB方法所做的结果依然被提交。而除了methodB之外的其它代码导致的结果却被回滚了。<br>使用PROPAGATION_REQUIRES_NEW,需要使用JtaTransactionManager作为事务管理器。</p>
+<p><strong>（e）</strong>PROPAGATION_NOT_SUPPORTED： 总是非事务地执行，并挂起任何存在的事务。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;事务属性 PROPAGATION_REQUIRED   </span><br><span class="line">methodA()&#123;  </span><br><span class="line">  doSomeThingA();  </span><br><span class="line">  serviceB.methodB();  </span><br><span class="line">  doSomeThingB();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;事务属性 PROPAGATION_NOT_SUPPORTED   </span><br><span class="line">methodB()&#123;  </span><br><span class="line">  ……  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>当单独调用methodB时，不启用任何事务机制，非事务地执行。</p>
+<p>当调用methodA时，相当于下面的效果</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main()&#123;  </span><br><span class="line"> TransactionManager tm &#x3D; null;  </span><br><span class="line"> try&#123;  </span><br><span class="line">  &#x2F;&#x2F;获得一个JTA事务管理器  </span><br><span class="line">   tm &#x3D; getTransactionManager();  </span><br><span class="line">   tm.begin();&#x2F;&#x2F;开启一个新的事务  </span><br><span class="line">   Transaction ts1 &#x3D; tm.getTransaction();  </span><br><span class="line">   doSomeThing();  </span><br><span class="line">   tm.suspend();&#x2F;&#x2F;挂起当前事务  </span><br><span class="line">   methodB();  </span><br><span class="line">   &#x2F;&#x2F;methodB执行完后，复恢第一个事务  </span><br><span class="line">   tm.resume(ts1);  </span><br><span class="line">   doSomeThingB();  </span><br><span class="line">   ts1.commit();&#x2F;&#x2F;提交第一个事务  </span><br><span class="line"> &#125;catch(RunTimeException ex)&#123;  </span><br><span class="line">   ts1.rollback();&#x2F;&#x2F;回滚第一个事务  </span><br><span class="line"> &#125;finally&#123;  </span><br><span class="line">  &#x2F;&#x2F;释放资源  </span><br><span class="line"> &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>使用PROPAGATION_NOT_SUPPORTED,也需要使用JtaTransactionManager作为事务管理器。</p>
+<p><strong>（f）</strong>PROPAGATION_NEVER ：总是非事务地执行，如果存在一个活动事务，则抛出异常：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;事务属性 PROPAGATION_REQUIRED   </span><br><span class="line">methodA()&#123;  </span><br><span class="line">  doSomeThingA();  </span><br><span class="line">  seviceB.methodB();  </span><br><span class="line">  doSomeThingB();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;事务属性 PROPAGATION_NEVER   </span><br><span class="line">methodB()&#123;  </span><br><span class="line">  ……  </span><br><span class="line">&#125;  1234567891011</span><br></pre></td></tr></table></figure>
+
+<p>单独调用methodB，则非事务的执行。<br>调用methodA则会抛出异常<br>throw new IllegalTransactionStateException(<br>“Transaction propagation ‘never’ but existing transaction found”);</p>
+<p><strong>（g）</strong>PROPAGATION_NESTED：如果一个活动的事务存在，则运行在一个嵌套的事务中. 如果没有活动事务, 则按TransactionDefinition.PROPAGATION_REQUIRED 属性执行</p>
+<p>这是一个嵌套事务,使用JDBC 3.0驱动时,仅仅支持DataSourceTransactionManager作为事务管理器。需要JDBC 驱动的java.sql.Savepoint类。有一些JTA的事务管理器实现可能也提供了同样的功能。</p>
+<p>使用PROPAGATION_NESTED，还需要把PlatformTransactionManager的nestedTransactionAllowed属性设为true;<br>而nestedTransactionAllowed属性值默认为false;<br>例如如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;bean id&#x3D;&quot;system.platformTransactionManager&quot; class&#x3D;&quot;org.springframework.orm.hibernate3.HibernateTransactionManager&quot;&gt;  </span><br><span class="line">        &lt;property name&#x3D;&quot;sessionFactory&quot; ref&#x3D;&quot;system.sessionFactory&quot;&#x2F;&gt;  </span><br><span class="line">        &lt;property name&#x3D;&quot;nestedTransactionAllowed&quot; value&#x3D;&quot;true&quot;&#x2F;&gt;  </span><br><span class="line">    &lt;&#x2F;bean&gt;1234</span><br><span class="line">&#x2F;&#x2F;事务属性 PROPAGATION_REQUIRED   </span><br><span class="line">methodA()&#123;  </span><br><span class="line">  doSomeThingA();  </span><br><span class="line">  serviceB.methodB();  </span><br><span class="line">  doSomeThingB();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;事务属性 PROPAGATION_NESTED  </span><br><span class="line">methodB()&#123;  </span><br><span class="line">  ……  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>如果单独调用methodB方法，则按REQUIRED属性执行。</p>
+<p>如果调用methodA方法，相当于下面的效果</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">main()&#123;  </span><br><span class="line">Connection con &#x3D; null;  </span><br><span class="line">Savepoint savepoint &#x3D; null;  </span><br><span class="line">try&#123;  </span><br><span class="line">  con &#x3D; getConnection();  </span><br><span class="line">  con.setAutoCommit(false);  </span><br><span class="line">  doSomeThingA(); </span><br><span class="line">  &#x2F;&#x2F;创造一个事务的保存点 </span><br><span class="line">  savepoint &#x3D; con2.setSavepoint();  </span><br><span class="line">  try  </span><br><span class="line">      methodB();  </span><br><span class="line">  &#125;catch(RuntimeException ex)&#123;  </span><br><span class="line">     con.rollback(savepoint);  </span><br><span class="line">  &#125;  </span><br><span class="line">  finally&#123;  </span><br><span class="line">    &#x2F;&#x2F;释放资源  </span><br><span class="line">  &#125;  </span><br><span class="line"></span><br><span class="line">  doSomeThingB();  </span><br><span class="line">  con.commit();  </span><br><span class="line">&#125;  </span><br><span class="line">catch(RuntimeException ex)&#123;  </span><br><span class="line">  con.rollback();  </span><br><span class="line">&#125;  </span><br><span class="line">finally&#123;  </span><br><span class="line">  &#x2F;&#x2F;释放资源  </span><br><span class="line">&#125;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>当methodB方法调用之前，调用setSavepoint方法，保存当前的状态到savepoint。如果methodB方法调用失败，则恢复到之前保存的状态。但是需要注意的是，这时的事务并没有进行提交，如果后续的代码(doSomeThingB()方法)调用失败，则回滚包括methodB方法的所有操作。</p>
+<p><strong>嵌套事务一个非常重要的概念就是内层事务依赖于外层事务。外层事务失败时，会回滚内层事务所做的动作。而内层事务操作失败并不会引起外层事务的回滚。</strong></p>
+<p>PROPAGATION_NESTED 与PROPAGATION_REQUIRES_NEW的区别:它们非常类似,都像一个嵌套事务，如果不存在一个活动的事务，都会开启一个新的事务。使用PROPAGATION_REQUIRES_NEW时，内层事务与外层事务就像两个独立的事务一样，一旦内层事务进行了提交后，外层事务不能对其进行回滚。两个事务互不影响。两个事务不是一个真正的嵌套事务。同时它需要JTA事务管理器的支持。<br>使用PROPAGATION_NESTED时，外层事务的回滚可以引起内层事务的回滚。而内层事务的异常并不会导致外层事务的回滚，它是一个真正的嵌套事务。DataSourceTransactionManager使用savepoint支持PROPAGATION_NESTED时，需要JDBC 3.0以上驱动及1.4以上的JDK版本支持。其它的JTA TrasactionManager实现可能有不同的支持方式。</p>
+<p>PROPAGATION_REQUIRED应该是我们首先的事务传播行为。它能够满足我们大多数的事务需求。</p>
+<h4 id="3-事务的超时性、回滚和只读"><a href="#3-事务的超时性、回滚和只读" class="headerlink" title="3.事务的超时性、回滚和只读"></a>3.事务的超时性、回滚和只读</h4><p><strong>超时：</strong><br>@Transactional(timeout=30) //默认是30秒</p>
+<p><strong>异常回滚：</strong><br>指定单一异常类：@Transactional(rollbackFor=RuntimeException.class)</p>
+<p>指定多个异常类：@Transactional(rollbackFor={RuntimeException.class, Exception.class})<br>该属性用于设置需要进行回滚的异常类数组，当方法中抛出指定异常数组中的异常时，则进行事务回滚。</p>
+<p><strong>正常的情况下也可以回滚：</strong></p>
+<p>TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();</p>
+<p><strong>只读</strong>：<br>@Transactional(readOnly=true)<br>该属性用于设置当前事务是否为只读事务，设置为true表示只读，false则表示可读写，默认值为false。</p>
+<h3 id="5、注意的地方"><a href="#5、注意的地方" class="headerlink" title="5、注意的地方"></a>5、注意的地方</h3><p>1.@Transactional 只能被应用到public方法上, 对于其它非public的方法,如果标记了@Transactional也不会报错,但方法没有事务功能.</p>
+<p>2.用 spring 事务管理器,由spring来负责数据库的打开,提交,回滚</p>
+<p>3.默认遇到运行期异常（非受检查型异常）(throw new RuntimeException(&quot;注释&quot;);)会回滚；而遇到需要非运行时异常（受检查的异，捕获的异常）(throw new Exception(&quot;注释&quot;);)不会回滚；</p>
+<p>要想所有异常都回滚,要加上 @Transactional( rollbackFor={Exception.class,其它异常}) .</p>
+<p>如果让运行时异常不回滚： @Transactional(notRollbackFor=RunTimeException.class)</p>
+<p>指定回滚,遇到异常Exception时回滚@Transactional(rollbackFor=Exception.class) </p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Dawn-yhc 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.jpg" alt="Dawn-yhc 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文博主： </strong>Dawn-yhc
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://yuhaicheng.xyz/2021-03-23-MySql%E5%92%8CSpring%E4%B8%AD%E4%BA%8B%E7%89%A9%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86.html" title="MySql和Spring中事物的实现原理">https://yuhaicheng.xyz/2021-03-23-MySql和Spring中事物的实现原理.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021-03-22-mysql%E7%9A%84%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%8E%9F%E7%90%86%E5%92%8C%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB.html" rel="prev" title="mysql的主从复制原理和读写分离">
+                  <i class="fa fa-chevron-left"></i> mysql的主从复制原理和读写分离
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021-03-23-Mysql%E4%B8%ADMySql%E4%B8%ADcount%E3%80%81limit%E3%80%81order%20by%E3%80%81group%20by%E7%9A%84%E7%94%A8%E6%B3%95.html" rel="next" title="MySql中count、limit、order by、group by的用法">
+                  MySql中count、limit、order by、group by的用法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NDkyOC8yMTQ1MA=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dawn-yhc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">378k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">5:44</span>
+  </span>
+</div><div class="footer-custom">
+
+<span id="jinrishici-sentence">正在加载今日诗词....</span>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/weilining/blog.io/js/src/jinrishici.js" charset="utf-8" async="async"></script>
+</div>
+<script color= "255, 255, 255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+<div>
+    <canvas id="snow" width="570" height="696"></canvas>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/weilining/blog.io/js/src/snow.min.js" async="async"></script>
+</div>
+<!-- 社会主义价值观 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/weilining/blog.io/js/cursor/text.js" async="async"></script>
+
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-next@8.0.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-next@8.0.1/source/js/motion.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-next@8.0.1/source/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+  <script data-pjax>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/hexo-theme-next@8.0.1/source/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+
+  <script>
+    NProgress.configure({
+      showSpinner: true
+    });
+    NProgress.start();
+    document.addEventListener('readystatechange', () => {
+      if (document.readyState === 'interactive') {
+        NProgress.inc(0.8);
+      }
+      if (document.readyState === 'complete') {
+        NProgress.done();
+      }
+    });
+    document.addEventListener('pjax:send', () => {
+      NProgress.start();
+    });
+    document.addEventListener('pjax:success', () => {
+      NProgress.done();
+    });
+  </script>
+
+
+  
+
+
+
+
+
+
+
+
+    <div class="pjax">
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://yuhaicheng.xyz/2021-03-23-MySql%E5%92%8CSpring%E4%B8%AD%E4%BA%8B%E7%89%A9%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86.html',]
+      });
+      });
+  </script>
+
+<script>
+NexT.utils.loadComments('#lv-container', () => {
+  window.livereOptions = {
+    refer: "2021-03-23-MySql和Spring中事物的实现原理.html"
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+    </div>
+</body>
+</html>

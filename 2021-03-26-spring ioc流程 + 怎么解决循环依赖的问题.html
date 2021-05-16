@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-CN,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/weilining/blog.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/weilining/blog.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/weilining/blog.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/weilining/blog.io/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="1111RcBkV43JHcyiH4z1Yk2xu-mqlS1fQNk5Dzv7_q0">
+  <meta name="msvalidate.01" content="1111BC77E02800759CE29C4ACCE487BD">
+  <meta name="yandex-verification" content="11112a93328de5da">
+  <meta name="baidu-site-verification" content="1111-wFDrn4lvkD">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+  <script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yuhaicheng.xyz","root":"/","scheme":"Gemini","version":"8.0.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="null">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring ioc流程 + 怎么解决循环依赖的问题">
+<meta property="og:url" content="https://yuhaicheng.xyz/2021-03-26-spring%20ioc%E6%B5%81%E7%A8%8B%20+%20%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E9%97%AE%E9%A2%98.html">
+<meta property="og:site_name" content="曙光苑">
+<meta property="og:description" content="null">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/bean的创建.png">
+<meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/image2021-1-6_21-0-33.png">
+<meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/image2021-1-6_21-0-51.png">
+<meta property="article:published_time" content="2021-03-26T04:15:14.000Z">
+<meta property="article:modified_time" content="2021-03-25T03:05:14.000Z">
+<meta property="article:author" content="Dawn-yhc">
+<meta property="article:tag" content="Bean">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/bean的创建.png">
+
+
+<link rel="canonical" href="https://yuhaicheng.xyz/2021-03-26-spring%20ioc%E6%B5%81%E7%A8%8B%20+%20%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E9%97%AE%E9%A2%98.html">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>spring ioc流程 + 怎么解决循环依赖的问题 | 曙光苑</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108155018-3"></script>
+    <script data-pjax>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-108155018-3');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="曙光苑" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">曙光苑</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">有朋自远方来，不亦乐乎</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-bell fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">23</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-baidusitemap">
+
+    <a href="/baidusitemap.xml" rel="section"><i class="fa fa-cloud fa-fw"></i>百度站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#spring-ioc%E6%B5%81%E7%A8%8B-%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">spring ioc流程 + 怎么解决循环依赖的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81spring-ioc-%E7%9A%84%E5%A4%A7%E8%87%B4%E6%B5%81%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">一、spring ioc 的大致流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96"><span class="nav-number">1.2.</span> <span class="nav-text">二、什么是循环依赖</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Dawn-yhc"
+      src="https://cdn.jsdelivr.net/gh/weilining/blog.io/images/logo.svg">
+  <p class="site-author-name" itemprop="name">Dawn-yhc</p>
+  <div class="site-description" itemprop="description">JAVA、技术</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0Rhd24teWhjLw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Dawn-yhc&#x2F;"><i class="fab fa-github fa-fw"></i></span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93ZWlsaW5pbmcuZ2l0aHViLmlv" title="https:&#x2F;&#x2F;weilining.github.io">Ln</span>
+        </li>
+    </ul>
+  </div>
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/2021-04-10-gc%E3%80%81oom.html" title="2021-04-10-gc、oom.html">gc类型、内存泄露和内存溢出</a>
+        </li>
+    </ul>
+  </div>
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/weilining/blog.io/js/src/time.js" async="async"></script>
+
+
+<div id="binft"class="links-of-recent-posts motion-element"></div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/weilining/blog.io/js/src/word.js" async="async"></script>
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL0Rhd24teWhjL0Rhd24teWhjLmdpdGh1Yi5pbw==" title="Fork NexT on GitHub" aria-label="Fork NexT on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuhaicheng.xyz/2021-03-26-spring%20ioc%E6%B5%81%E7%A8%8B%20+%20%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E9%97%AE%E9%A2%98.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/weilining/blog.io/images/logo.svg">
+      <meta itemprop="name" content="Dawn-yhc">
+      <meta itemprop="description" content="JAVA、技术">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="曙光苑">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          spring ioc流程 + 怎么解决循环依赖的问题<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRodWIuY29tL0Rhd24teWhjL0Rhd24teWhjLmdpdGh1Yi5pby9lZGl0L21haW4vc291cmNlL19wb3N0cy8yMDIxLTAzLTI2LXNwcmluZyBpb2PmtYHnqIsgKyDmgI7kuYjop6PlhrPlvqrnjq/kvp3otZbnmoTpl67popgubWQ=" title="编辑"><i class="fa fa-pen-nib"></i></span>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-26 12:15:14" itemprop="dateCreated datePublished" datetime="2021-03-26T12:15:14+08:00">2021-03-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-25 11:05:14" itemprop="dateModified" datetime="2021-03-25T11:05:14+08:00">2021-03-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">框架</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description"></div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="spring-ioc流程-怎么解决循环依赖的问题"><a href="#spring-ioc流程-怎么解决循环依赖的问题" class="headerlink" title="spring ioc流程 + 怎么解决循环依赖的问题"></a>spring ioc流程 + 怎么解决循环依赖的问题</h2><p>先调用构造函数进行实例化，然后填充属性，再接着进行其他附加操作和初始化，正是这样的生命周期，才有了Spring的解决循环依赖，这样的解决机制是根据Spring框架内定义的三级缓存来实现的，也就是说：三级缓存解决了Bean之间的循环依赖。</p>
+<p>一级一级向下寻找，找出了前面提到的三级缓存，也就是三个Map集合类：</p>
+<p>singletonObjects：第一级缓存，里面放置的是实例化好的单例对象；</p>
+<p>earlySingletonObjects：第二级缓存，里面存放的是提前曝光的单例对象；</p>
+<p>singletonFactories：第三级缓存，里面存放的是要被实例化的对象的对象工厂。</p>
+<p>所以当一个Bean调用构造函数进行实例化后，即使属性还未填充，就可以通过三级缓存向外暴露依赖的引用值（所以循环依赖问题的解决也是基于Java的引用传递），这也说明了另外一点，基于构造函数的注入，如果有循环依赖，Spring是不能够解决的。还要说明一点，Spring默认的Bean Scope是单例的，而三级缓存中都包含singleton，可见是对于单例Bean之间的循环依赖的解决，Spring是通过三级缓存来实现的。</p>
+<h3 id="一、spring-ioc-的大致流程"><a href="#一、spring-ioc-的大致流程" class="headerlink" title="一、spring ioc 的大致流程"></a>一、spring ioc 的大致流程</h3><p><strong>bean的创建过程</strong></p>
+<p><img data-src="D:\SoftwareInstallation\Typora\file\记事本\pictures\bean的创建.png" alt="bean的创建" loading="lazy"></p>
+<p><strong>简单的来说就是：</strong></p>
+<p><strong>①实例化spring容器并初始化→②扫描指定包中的类创建beanDefinition对象→③执行beanFactoryPostProcessor</strong>（执行在bean创建之前，beanDefinition创建之后，算是一个spring的扩展点）→<strong>④推断构造方法，通过反射创建bean对象→⑤执行beanPostProcessor</strong>（在创建对象之后，算是一个spring的扩展点）→<strong>⑥填充属性</strong>（这里会有循环依赖产生，通过二级缓存解决，如果有多重循环依赖，三级缓存则发挥作用）<strong>→⑦执行aware接口重写方法（如果实现了）、执行生命周期初始化方法、执行配置的init-method→⑦将二级缓存和三级缓存中的工厂对象以及bean对象移除，放入到一级缓存中（单例池）</strong>（这里要说明一下：二级缓存是在创建完实例对象后，如果这个bean支持循环依赖，将根据实例对象生成的工厂放入二级缓存的，<strong>这个工厂的回调函数getEarlyRefenrence()会遍历BeanPostProcessor，其中包含了BeanNameAutoProxyCreator和SmartInstantiationAwareBeanPostProcessor接口，如果是BeanNameAutoProxyCreator则生成代理对象，如果是普通BeanPostProcessor则不作处理</strong></p>
+<p>如果没有循环依赖的场景，不会用到三级缓存，直接将二级缓存中的工厂生产的bean对象放入一级缓存中，并移除二级缓存；如果存在循环依赖的场景，在该bean（接下来用A表示）所依赖的bean（接下来用B表示）执行populate填充A时调用getBean方法，进而调用getsingleton时，会将二级缓存的工厂对象取出生产具体的A对象并放入三级缓存中，如果对A还有循环依赖的，之后就可以直接从三级缓存中获取了，这样做的目的是提高性能，因为二级缓存中的工厂生产bean的过程是一个很漫长的过程，里面会执行很多后置处理器，很大的影响了性能</p>
+<h3 id="二、什么是循环依赖"><a href="#二、什么是循环依赖" class="headerlink" title="二、什么是循环依赖"></a>二、什么是循环依赖</h3><p>循环依赖就是两个及以上的由spring管理的bean相互引用对方（相互作为对方的成员属性）形成的一种关系。如下图所示</p>
+<p><img data-src="D:\SoftwareInstallation\Typora\file\记事本\pictures\image2021-1-6_21-0-33.png" alt="image2021-1-6_21-0-33" loading="lazy"></p>
+<p><img data-src="D:\SoftwareInstallation\Typora\file\记事本\pictures\image2021-1-6_21-0-51.png" alt="image2021-1-6_21-0-51" loading="lazy"></p>
+<p>在BeanFactory中，表示循环依赖的属性为allowCircleReferences，其默认值为true，也就是说spring是默认支持循环依赖的，循环依赖主要是在属性填充的时候触发，当A的bean还没创建好（可以理解成还没放到单例池中形成闭环）去填充B时，发现B里面也有A，如果只有一个缓存，你会发现A拿不到B，B也拿不到A，那么就成了一个死循环，spring在这里就用到了二级缓存来解决这样的问题，（三级缓存解决的是性能问题），接下来通过属性填充的过程来解释一下循环依赖的过程</p>
+<p>![属性填充 (1)](D:\SoftwareInstallation\Typora\file\记事本\pictures\属性填充 (1).png)</p>
+<p>简单的来说就是：<br>例：X中含有Y，Y中含有X。当X对象已经创建好了，此时开始将Y属性填充到X对象中：<br>X已经创建成功，二级缓存中已经存在→①通过getBean方法获取Y对象→②在doGetBean中调用getSingleton方法试着从缓存中获取Y，然而获取不到→④调用createBean创建Y→④创建好了Y对象后，将Y放入二级缓存中（工厂）→⑤填充Y中的属性X→⑥通过getBean方法获取X对象→⑦在doGetBean中调用getSingleton方法试着从缓存中获取X，在二级缓存中的工厂生产出X并返回→⑧完成Y中X属性的填充，将Y放入一级缓存中返回Y的bean→⑨完成X中Y属性的填充，将X放入一级缓存中，并返回X</p>
+<p>三级缓存的作用：三级缓存主要是用来提升性能的，一般地，在两个bean循环依赖的场景下（x依赖Y，Y依赖x），是用不到三级缓存的。</p>
+<p>三级缓存运用的时机：当存在循环依赖且一个bean被两个及两个以上的bean所依赖时（X依赖Y，Y依赖X，Z依赖X），三级缓存就会用到了，X先注入Y，通过实例化Y并注入X时，X就会从二级缓存中的工厂创建并放在三级缓存中，再当Z去注入X时，Z就直接从三级缓存中拿X的bean了，不会再从二级缓存中的工厂去生产了。</p>
+<p>二级缓存和三级缓存的差异：二级缓存中的是一个工厂，这个工厂在生产bean的时候会经历很多BeanPostProcessor，值就大量的降低了性能，而三级缓存中的bean本来就是工厂生产出来的定制化的bean，完全可以省去工厂生产的步骤，进行复用，所以用三级缀存性能更强</p>
+<p>二级缓存的作用：二级缓存的第一个较为常见的作用，就是代理实现AOP，比如说X所依赖的Y是实现了AOP的，那么我们通过X去获取的Y并不是我们所写的Y，而是一个代理对象，这里就需要工厂通过一系列的BeanPostProcessor来生产出代理对象，而二级缓存存放工厂而不是bean的目的就是在此。而二级缓存生产出的代理对象也好 还是其他定制化对象也好，如果有循环依赖的情况，最后都会放到三级缓存中。</p>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Dawn-yhc 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.jpg" alt="Dawn-yhc 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文博主： </strong>Dawn-yhc
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://yuhaicheng.xyz/2021-03-26-spring%20ioc%E6%B5%81%E7%A8%8B%20+%20%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E9%97%AE%E9%A2%98.html" title="spring ioc流程 + 怎么解决循环依赖的问题">https://yuhaicheng.xyz/2021-03-26-spring ioc流程 + 怎么解决循环依赖的问题.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Bean/" rel="tag"><i class="fa fa-tag"></i> Bean</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021-03-25-Spring%20%20Cloud%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86.html" rel="prev" title="Spring  Cloud的基本知识">
+                  <i class="fa fa-chevron-left"></i> Spring  Cloud的基本知识
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021-03-27-SpringBoot%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86.html" rel="next" title="SpringBoot的基本知识">
+                  SpringBoot的基本知识 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NDkyOC8yMTQ1MA=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dawn-yhc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">378k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">5:44</span>
+  </span>
+</div><div class="footer-custom">
+
+<span id="jinrishici-sentence">正在加载今日诗词....</span>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/weilining/blog.io/js/src/jinrishici.js" charset="utf-8" async="async"></script>
+</div>
+<script color= "255, 255, 255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+<div>
+    <canvas id="snow" width="570" height="696"></canvas>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/weilining/blog.io/js/src/snow.min.js" async="async"></script>
+</div>
+<!-- 社会主义价值观 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/weilining/blog.io/js/cursor/text.js" async="async"></script>
+
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-next@8.0.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-next@8.0.1/source/js/motion.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-next@8.0.1/source/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+  <script data-pjax>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/hexo-theme-next@8.0.1/source/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.0/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+
+  <script>
+    NProgress.configure({
+      showSpinner: true
+    });
+    NProgress.start();
+    document.addEventListener('readystatechange', () => {
+      if (document.readyState === 'interactive') {
+        NProgress.inc(0.8);
+      }
+      if (document.readyState === 'complete') {
+        NProgress.done();
+      }
+    });
+    document.addEventListener('pjax:send', () => {
+      NProgress.start();
+    });
+    document.addEventListener('pjax:success', () => {
+      NProgress.done();
+    });
+  </script>
+
+
+  
+
+
+
+
+
+
+
+
+    <div class="pjax">
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://yuhaicheng.xyz/2021-03-26-spring%20ioc%E6%B5%81%E7%A8%8B%20+%20%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E9%97%AE%E9%A2%98.html',]
+      });
+      });
+  </script>
+
+<script>
+NexT.utils.loadComments('#lv-container', () => {
+  window.livereOptions = {
+    refer: "2021-03-26-spring ioc流程 + 怎么解决循环依赖的问题.html"
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+    </div>
+</body>
+</html>
