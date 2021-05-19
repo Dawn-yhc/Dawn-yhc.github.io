@@ -42,7 +42,6 @@
 <meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/20190505195114634.jpeg">
 <meta property="og:image" content="https://yuhaicheng.xyz/SoftwareInstallation/Typora/file/%E8%AE%B0%E4%BA%8B%E6%9C%AC/pictures/9d182d944e0889c304ef529ba50a4fcd205214.png">
 <meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/20190505204255694.jpeg">
-<meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/20210308160236835.png">
 <meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/20190505201114825.jpeg">
 <meta property="og:image" content="d:/SoftwareInstallation/Typora/file/记事本/pictures/20190505202907828.jpeg">
 <meta property="article:published_time" content="2021-03-19T03:15:14.000Z">
@@ -163,7 +162,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">73</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">77</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -173,7 +172,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">49</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -242,7 +241,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81java%E4%B8%AD%E5%85%B3%E4%BA%8E%E9%94%81%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">一、java中关于锁的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E9%94%81%E6%B6%89%E5%8F%8A%E7%9A%84%E5%87%A0%E4%B8%AA%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">1、锁涉及的几个重要概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1%E6%AD%BB%E9%94%81"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1死锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2可重入锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3%E8%87%AA%E6%97%8B%E9%94%81"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3自旋锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4%E8%87%AA%E9%80%82%E5%BA%94%E8%87%AA%E6%97%8B%E9%94%81"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4自适应自旋锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5%E5%81%8F%E5%90%91%E9%94%81"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5偏向锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6%E9%94%81%E7%B2%97%E5%8C%96"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.6锁粗化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7%E7%B1%BB%E9%94%81%E5%92%8C%E5%AF%B9%E8%B1%A1%E9%94%81%EF%BC%88%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81-%E8%87%AA%E5%B7%B1%E5%8F%AF%E4%BB%A5%E8%B7%91%E4%B8%80%E4%B8%8B%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%8C%E4%B8%8B%E9%9D%A2%E5%90%84%E7%A7%8D%E6%83%85%E5%86%B5%E9%83%BD%E5%B7%B2%E6%B5%8B%E8%AF%95%EF%BC%89"><span class="nav-number">1.1.7.</span> <span class="nav-text">1.7类锁和对象锁（非常重要 自己可以跑一下代码示例，下面各种情况都已测试）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81synchronized%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">2、synchronized实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1synchronized%E9%94%81%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1synchronized锁的优化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81Java%E9%94%81%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.3.</span> <span class="nav-text">3、Java锁的种类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1%E3%80%81%E5%85%AC%E5%B9%B3%E9%94%81-%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1、公平锁&#x2F;非公平锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFAQS%EF%BC%9F"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">什么是AQS？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2%E3%80%81%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2、可重入锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3%E3%80%81%E7%8B%AC%E4%BA%AB%E9%94%81-%E5%85%B1%E4%BA%AB%E9%94%81"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3、独享锁&#x2F;共享锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4%E3%80%81%E4%BA%92%E6%96%A5%E9%94%81-%E8%AF%BB%E5%86%99%E9%94%81"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4、互斥锁&#x2F;读写锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5%E3%80%81%E4%B9%90%E8%A7%82%E9%94%81-%E6%82%B2%E8%A7%82%E9%94%81"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5、乐观锁&#x2F;悲观锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6%E3%80%81%E5%88%86%E6%AE%B5%E9%94%81"><span class="nav-number">1.3.6.</span> <span class="nav-text">3.6、分段锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-7%E3%80%81%E5%81%8F%E5%90%91%E9%94%81-%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81-%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81"><span class="nav-number">1.3.7.</span> <span class="nav-text">3.7、偏向锁&#x2F;轻量级锁&#x2F;重量级锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-8%E3%80%81%E8%87%AA%E6%97%8B%E9%94%81"><span class="nav-number">1.3.8.</span> <span class="nav-text">3.8、自旋锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-8-1-CAS"><span class="nav-number">1.3.8.1.</span> <span class="nav-text">3.8.1 CAS</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-8-2-ABA%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.8.2.</span> <span class="nav-text">3.8.2 ABA问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%82%A3%E4%B9%88%E4%B8%BA%E4%BB%80%E4%B9%88%E9%98%BB%E5%A1%9E%E5%92%8C%E5%94%A4%E9%86%92%E7%BA%BF%E7%A8%8B%E4%BC%9A%E6%B6%88%E8%80%97%E5%A4%A7%E9%87%8F%E6%97%B6%E9%97%B4%E5%91%A2%EF%BC%9F"><span class="nav-number">1.3.8.3.</span> <span class="nav-text">那么为什么阻塞和唤醒线程会消耗大量时间呢？</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81java%E4%B8%AD%E5%85%B3%E4%BA%8E%E9%94%81%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">一、java中关于锁的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E9%94%81%E6%B6%89%E5%8F%8A%E7%9A%84%E5%87%A0%E4%B8%AA%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">1、锁涉及的几个重要概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1%E6%AD%BB%E9%94%81"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1死锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2可重入锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3%E8%87%AA%E6%97%8B%E9%94%81"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3自旋锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4%E8%87%AA%E9%80%82%E5%BA%94%E8%87%AA%E6%97%8B%E9%94%81"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4自适应自旋锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5%E5%81%8F%E5%90%91%E9%94%81"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5偏向锁</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%8F%E5%90%91%E9%94%81"><span class="nav-number">1.2.</span> <span class="nav-text">偏向锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81"><span class="nav-number">1.3.</span> <span class="nav-text">轻量级锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81"><span class="nav-number">1.4.</span> <span class="nav-text">重量级锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6%E9%94%81%E7%B2%97%E5%8C%96"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.6锁粗化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7%E7%B1%BB%E9%94%81%E5%92%8C%E5%AF%B9%E8%B1%A1%E9%94%81%EF%BC%88%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81-%E8%87%AA%E5%B7%B1%E5%8F%AF%E4%BB%A5%E8%B7%91%E4%B8%80%E4%B8%8B%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%8C%E4%B8%8B%E9%9D%A2%E5%90%84%E7%A7%8D%E6%83%85%E5%86%B5%E9%83%BD%E5%B7%B2%E6%B5%8B%E8%AF%95%EF%BC%89"><span class="nav-number">1.4.2.</span> <span class="nav-text">1.7类锁和对象锁（非常重要 自己可以跑一下代码示例，下面各种情况都已测试）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81synchronized%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.5.</span> <span class="nav-text">2、synchronized实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1synchronized%E9%94%81%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-number">1.5.1.</span> <span class="nav-text">2.1synchronized锁的优化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81Java%E9%94%81%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.6.</span> <span class="nav-text">3、Java锁的种类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1%E3%80%81%E5%85%AC%E5%B9%B3%E9%94%81-%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81"><span class="nav-number">1.6.1.</span> <span class="nav-text">3.1、公平锁&#x2F;非公平锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFAQS%EF%BC%9F"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">什么是AQS？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2%E3%80%81%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81"><span class="nav-number">1.6.2.</span> <span class="nav-text">3.2、可重入锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3%E3%80%81%E7%8B%AC%E4%BA%AB%E9%94%81-%E5%85%B1%E4%BA%AB%E9%94%81"><span class="nav-number">1.6.3.</span> <span class="nav-text">3.3、独享锁&#x2F;共享锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4%E3%80%81%E4%BA%92%E6%96%A5%E9%94%81-%E8%AF%BB%E5%86%99%E9%94%81"><span class="nav-number">1.6.4.</span> <span class="nav-text">3.4、互斥锁&#x2F;读写锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5%E3%80%81%E4%B9%90%E8%A7%82%E9%94%81-%E6%82%B2%E8%A7%82%E9%94%81"><span class="nav-number">1.6.5.</span> <span class="nav-text">3.5、乐观锁&#x2F;悲观锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6%E3%80%81%E5%88%86%E6%AE%B5%E9%94%81"><span class="nav-number">1.6.6.</span> <span class="nav-text">3.6、分段锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-7%E3%80%81%E5%81%8F%E5%90%91%E9%94%81-%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81-%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81"><span class="nav-number">1.6.7.</span> <span class="nav-text">3.7、偏向锁&#x2F;轻量级锁&#x2F;重量级锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-8%E3%80%81%E8%87%AA%E6%97%8B%E9%94%81"><span class="nav-number">1.6.8.</span> <span class="nav-text">3.8、自旋锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-8-1-CAS"><span class="nav-number">1.6.8.1.</span> <span class="nav-text">3.8.1 CAS</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-8-2-ABA%E9%97%AE%E9%A2%98"><span class="nav-number">1.6.8.2.</span> <span class="nav-text">3.8.2 ABA问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%82%A3%E4%B9%88%E4%B8%BA%E4%BB%80%E4%B9%88%E9%98%BB%E5%A1%9E%E5%92%8C%E5%94%A4%E9%86%92%E7%BA%BF%E7%A8%8B%E4%BC%9A%E6%B6%88%E8%80%97%E5%A4%A7%E9%87%8F%E6%97%B6%E9%97%B4%E5%91%A2%EF%BC%9F"><span class="nav-number">1.6.8.3.</span> <span class="nav-text">那么为什么阻塞和唤醒线程会消耗大量时间呢？</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -258,7 +257,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">73</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -271,7 +270,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -301,7 +300,7 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2021-04-10-gc%E3%80%81oom.html" title="2021-04-10-gc、oom.html">gc类型、内存泄露和内存溢出</a>
+          <a href="/2021-05-18-synchronized%E5%92%8Clock%E5%8E%9F%E7%90%86.html" title="2021-05-18-synchronized和lock原理.html">synchronized和lock原理</a>
         </li>
     </ul>
   </div>
@@ -388,7 +387,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/java%E4%B8%AD%E7%9A%84%E9%94%81/" itemprop="url" rel="index"><span itemprop="name">java中的锁</span></a>
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
         </span>
     </span>
 
@@ -429,7 +428,9 @@
 <h4 id="1-4自适应自旋锁"><a href="#1-4自适应自旋锁" class="headerlink" title="1.4自适应自旋锁"></a>1.4自适应自旋锁</h4><p>自旋锁为了解决浪费系统资源，有了自适应自旋锁，这是是对自旋锁的一种优化。当一个线程自旋后成功获得了锁，那么下次自旋的次数就会增加。因为虚拟机认为，既然上次自旋期间成功拿到了锁，那么后面的自旋会有很大几率拿到锁。相反，如果对于某个锁，很少有自旋能够成功获得的，那么后面就会减少自旋次数，甚至省略掉自旋过程，以免浪费处理器资源。 <strong>这种锁是默认开启的。</strong></p>
 <h4 id="1-5偏向锁"><a href="#1-5偏向锁" class="headerlink" title="1.5偏向锁"></a>1.5偏向锁</h4><p>偏向锁指的是，当第一个线程请求时，会判断锁的对象头里的ThreadId字段的值，如果为空，则让该线程持有偏向锁，并将ThreadId的值置为当前线程ID。当前线程再次进入时，如果线程ID与ThreadId的值相等，则该线程就不会再重复获取锁了。因为锁的请求与释放是要消耗系统资源的。</p>
 <blockquote>
-<p>如果有其他线程也来请求该锁，则偏向锁就会撤销，然后升级为轻量级锁。如果锁的竞争十分激烈，则轻量级锁又会升级为重量级锁。这里涉及到一系列锁升级。</p>
+<h3 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h3><p>此时当 Thread#1 进入临界区时，JVM 会将 lockObject 的 对象头 Mark Word 的锁标志位设为“01”，同时会用 CAS 操作把 Thread#1 的线程 ID 记录到 Mark Word 中，此时进 入偏向模式。所谓“偏向”，指的是这个锁会偏向于 Thread#1， 若接下来没有其他线程进入临界区，则 Thread#1 再出入 临界区无需再执行任何同步操作。也就是说，若只有 Thread#1 会进入临界区，实际上只有 Thread#1 初次进入 临界区时需要执行 CAS 操作，以后再出入临界区都不会有 同步操作带来的开销。</p>
+<h3 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h3><p>偏向锁的场景太过于理想化，更多的时候是 Thread#2 也 会尝试进入临界区， 如果 Thread#2 也进入临界区但是 Thread#1 还没有执行完同步代码块时，会暂停 Thread#1 并且升级到轻量级锁。Thread#2 通过自旋再次尝试以轻量 级锁的方式来获取锁</p>
+<h3 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h3><p>如果 Thread#1 和 Thread#2 正常交替执行，那么轻量级锁 基本能够满足锁的需求。但是如果 Thread#1 和 Thread#2 同时进入临界区，那么轻量级锁就会膨胀为重量级锁，意 味着 Thread#1 线程获得了重量级锁的情况下，Thread#2 就会被阻塞。</p>
 </blockquote>
 <h4 id="1-6锁粗化"><a href="#1-6锁粗化" class="headerlink" title="1.6锁粗化"></a>1.6锁粗化</h4><p>锁粗化指的是，在编译期间将相邻的同步代码块合并成一个大同步块。这样做可以减少反复申请和释放同一个锁对象导致的系统开销。<strong>锁粗化也是默认开启的。</strong></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">粗化前伪代码：</span><br><span class="line"><span class="keyword">synchronized</span>(monitor)&#123;</span><br><span class="line">    method1();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">synchronized</span>(monitor)&#123;</span><br><span class="line">    method2();</span><br><span class="line">&#125;</span><br><span class="line">粗化后伪代码：</span><br><span class="line"><span class="keyword">synchronized</span>(monitor)&#123;</span><br><span class="line">    method1();</span><br><span class="line">    method2();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -440,7 +441,7 @@
 <h4 id="1-7类锁和对象锁（非常重要-自己可以跑一下代码示例，下面各种情况都已测试）"><a href="#1-7类锁和对象锁（非常重要-自己可以跑一下代码示例，下面各种情况都已测试）" class="headerlink" title="1.7类锁和对象锁（非常重要 自己可以跑一下代码示例，下面各种情况都已测试）"></a>1.7类锁和对象锁（非常重要 自己可以跑一下代码示例，下面各种情况都已测试）</h4><p><strong>（需要细细品：涉及加锁的范围，特别容易被忽视 而导致自己加了锁，但和自己逾期的结果不符）</strong></p>
 <p>如果你分不清类锁和对象锁，那你在代码中对于锁的使用和分析就很容易出问题。</p>
 <p><strong>对象锁占用的资源是对象级别，类锁占有的资源是类级别。</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Class A &#123;</span><br><span class="line">    <span class="comment">// 对象锁：普通实例方法默认同步监视器就是this，</span></span><br><span class="line">    <span class="comment">// 即调用该方法的对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="title">methodA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span>  <span class="title">methodB</span><span class="params">()</span> </span>&#123;     </span><br><span class="line">    <span class="comment">// 对象锁：this表示是对象锁</span></span><br><span class="line">    <span class="keyword">synchronized</span>(<span class="keyword">this</span>)&#123;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 类锁：修饰静态方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="title">methodC</span><span class="params">()</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">methodD</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// 类锁：A.class说明是类锁</span></span><br><span class="line">    <span class="keyword">synchronized</span>(A.class)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 普通方法：任何情况下调用时，都不会发生竞争</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">common</span><span class="params">()</span></span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Class A &#123;</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 对象锁：普通实例方法默认同步监视器就是this，</span></span><br><span class="line"><span class="comment">// 即调用该方法的对象</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="title">methodA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">public</span>  <span class="title">methodB</span><span class="params">()</span> </span>&#123;     </span><br><span class="line">    <span class="comment">// 对象锁：this表示是对象锁</span></span><br><span class="line">    <span class="keyword">synchronized</span>(<span class="keyword">this</span>)&#123;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 类锁：修饰静态方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="title">methodC</span><span class="params">()</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">methodD</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// 类锁：A.class说明是类锁</span></span><br><span class="line">    <span class="keyword">synchronized</span>(A.class)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 普通方法：任何情况下调用时，都不会发生竞争</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">common</span><span class="params">()</span></span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ol>
 <li><p>methodA,和methodB都是对当前对象加锁，即如果有两个线程同时访问同一个对象的methoA或methodB会发生竞争。如果两个线程访问的是不同对象的methodA和methodB则不会发生竞争。</p>
 </li>
@@ -468,18 +469,19 @@
 <p><strong>总结：</strong></p>
 <p>同步操作的实现，需要给对象关联一个互斥体，这个互斥体就可以叫做锁。</p>
 <p>锁的作用是，保证同一竞争资源在同一时刻只会有一个线程占有。</p>
-<p>Java中锁的实现方式有两种：synchronized关键字和并发包中的锁类。</p>
+<p>Java中锁的实现方式有两种：synchronized关键字和并发包中的lock。</p>
 <p>锁的优化策略有：锁消除、锁偏向、自适应自旋锁、锁粗化。</p>
 <p>尽量不要在循环内使用锁，以减少资源消耗。</p>
 <h4 id="2-1synchronized锁的优化"><a href="#2-1synchronized锁的优化" class="headerlink" title="2.1synchronized锁的优化"></a>2.1synchronized锁的优化</h4><p>Java中<code>Synchronized</code>是我们常用的<code>同步互斥手段</code>，在早期版本中，它是一个<code>悲观锁</code>设计下的<code>独占锁</code>，并且<code>可重入</code>。<code>Synchronized在获取到同步锁后，其他线程将会阻塞，对于阻塞或者唤醒一个线程都需要操作系统来完成，这就需要从用户态切换到内核态，这样的操作就需要消耗很多处理器时间，具有很强的性能损耗</code>，因此Synchronized在<strong>1.6</strong>中做了很多的优化，减少频繁的切换到内核态。</p>
 <p>在1.6之中为了提高Synchronized的性能，增加了<code>自适应自旋、锁消除、锁粗化、轻量级锁、偏向锁等来高效地共享数据，解决竞争问题</code>。<br><code>自旋锁</code>:在多线程操作中共享数据的锁定可能是和短暂的，避免线程在很短的时间内做用户态的切换，那么在允许多线程并行的基础上，让后面请求锁的线程“等待一下”，等待过程不放弃处理器的执行时间，为了让线程等待只需要让线程执行一个忙循环（自旋），这项技术就是所谓的自旋锁。<br><code>自适应自旋</code>是对自旋锁的优化，自旋锁的缺点就是如果锁占用的时间很长，那么就会浪费处理器资源，并且还对处理器有要求。加入自适应自旋就是自旋的时间不再固定，而是由前一个在同一个锁上的自旋时间以及锁的拥有者的状态决定，如果在同一个锁对象上，自旋等待刚刚成功获取过锁，并且持有锁的线程正在运行中，那么虚拟机会认为这次自旋很可能再次成功，应此可能允许等待时间更长；如果某一个锁上，很少自旋成功，那么将跳过自旋过程，避免资源浪费。虚拟机使用这一的策略和技术完成对Synchronized的一种优化</p>
-<p><code>锁消除</code>是指在虚拟机及时编译在运行时，对一些代码上要求同步，但是被检测到不可能存在共享数据竞争的锁进行消除如：消除锁的判断主要来于逃逸分析的数据支持，如果判断在一段代码中，堆上的数据都不会逃逸出去从而被其他线程访问到，那么就可以把他们当做栈上数据对待，认为他们是线程私有的，同步加锁就自热无效</p>
+<p><code>锁消除</code>是指在虚拟机及时编译在运行时，对一些代码上要求同步，但是被检测到不可能存在共享数据竞争的锁进行消除如：消除锁的判断主要来于逃逸分析的数据支持，如果判断在一段代码中，堆上的数据都不会逃逸出去从而被其他线程访问到，那么就可以把他们当做栈上数据对待，认为他们是线程私有的，同步加锁就自然无效。</p>
 <h3 id="3、Java锁的种类"><a href="#3、Java锁的种类" class="headerlink" title="3、Java锁的种类"></a>3、Java锁的种类</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">公平锁&#x2F;非公平锁</span><br><span class="line">可重入锁</span><br><span class="line">独享锁&#x2F;共享锁</span><br><span class="line">互斥锁&#x2F;读写锁</span><br><span class="line">乐观锁&#x2F;悲观锁</span><br><span class="line">分段锁</span><br><span class="line">偏向锁&#x2F;轻量级锁&#x2F;重量级锁</span><br><span class="line">自旋锁</span><br></pre></td></tr></table></figure>
 
 <p><img data-src="D:\SoftwareInstallation\Typora\file\记事本\pictures\20190505195114634.jpeg" alt="20190505195114634" loading="lazy"></p>
 <p>上面是很多锁的名词，这些分类并不是全是指锁的状态，有的指锁的特性，有的指锁的设计，下面总结的内容是对每个锁的名词进行一定的解释。</p>
 <h4 id="3-1、公平锁-非公平锁"><a href="#3-1、公平锁-非公平锁" class="headerlink" title="3.1、公平锁/非公平锁"></a>3.1、公平锁/非公平锁</h4><p>公平锁和非公平锁主要是关于等待的线程的排队的问题，这个排队要利AQS（AbstractQueuedSynchronizer）。</p>
-<p>公平锁 ：是指多个线程按照申请锁的顺序来获取锁。<br>非公平锁 ： 是指多个线程获取锁的顺序并不是按照申请锁的顺序，有可能后申请的线程比先申请的线程优先获取锁。有可能，会造成优先级反转或者饥饿现象。<br>对于Java ReentrantLock而言，通过构造函数指定该锁是否是公平锁（true|false），默认是非公平锁 false。非公平锁的优点在于吞吐量比公平锁大。<br>对于synchronized而言，也是一种非公平锁。由于其并不像ReentrantLock是通过AQS的来实现线程调度，所以并没有任何办法使其变成公平锁。</p>
+<p>公平锁 ：是指多个线程按照申请锁的顺序来获取锁。</p>
+<p>非公平锁 ： 是指多个线程获取锁的顺序并不是按照申请锁的顺序，有可能后申请的线程比先申请的线程优先获取锁。有可能，会造成优先级反转或者饥饿现象。<br>对于Java ReentrantLock而言，通过构造函数指定该锁是否是公平锁（true|false），默认是非公平锁 false。非公平锁的优点在于吞吐量比公平锁大。<br>对于synchronized而言，也是一种非公平锁。由于其并不像ReentrantLock是通过AQS的来实现线程调度，所以并没有任何办法使其变成公平锁。</p>
 <h5 id="什么是AQS？"><a href="#什么是AQS？" class="headerlink" title="什么是AQS？"></a>什么是AQS？</h5><p>AQS定义两种资源共享⽅式</p>
 <p><strong>Exclusive（独占）</strong>：只有⼀个线程能执⾏，如ReentrantLock。⼜可分为公平锁和⾮公平锁：</p>
 <ul>
@@ -521,7 +523,6 @@
 <p><strong>偏向锁</strong> ：是指一段同步代码一直被一个线程所访问，那么该线程会自动获取锁。降低获取锁的代价。</p>
 <p><strong>轻量级锁</strong> ：是指当锁是偏向锁的时候，被另一个线程所访问，偏向锁就会升级为轻量级锁，其他线程会通过自旋的形式尝试获取锁，不会阻塞，提高性能。</p>
 <p><strong>重量级锁</strong> ：是指当锁为轻量级锁的时候，另一个线程虽然是自旋，但自旋不会一直持续下去，当自旋一定次数的时候，还没有获取到锁，就会进入阻塞，该锁膨胀为重量级锁。重量级锁会让其他申请的线程进入阻塞，性能降低。</p>
-<p><img data-src="D:\SoftwareInstallation\Typora\file\记事本\pictures\20210308160236835.png" alt="20210308160236835" loading="lazy"></p>
 <h4 id="3-8、自旋锁"><a href="#3-8、自旋锁" class="headerlink" title="3.8、自旋锁"></a>3.8、自旋锁</h4><p>是指当一个线程在获取锁的时候，如果锁已经被其他线程获取，那么该线程将循环等待，然后不断判断是否能够被成功获取，自旋知道获取到锁才会退出循环。自旋是通过CAS算法进行的。何为CAS算法呢？</p>
 <h5 id="3-8-1-CAS"><a href="#3-8-1-CAS" class="headerlink" title="3.8.1 CAS"></a>3.8.1 CAS</h5><p>CAS(compare and swap)：比较和交换，顾名思义就是先进行比较然后在进行交换。这里比较和交换是线程中的数据和内存中的数据之间的操作。</p>
 <blockquote>
@@ -548,7 +549,7 @@
 <p>步骤2涉及两个子步骤：</p>
 <p>步骤2.1 从用户态切换到内核态</p>
 <p>为什么要进行这种切换呢？</p>
-<p>用户是没有权限对内存进行操作，我们要切换到内核态才有权对内存进行操作。</p>
+<p><strong>用户是没有权限对内存进行操作，我们要切换到内核态才有权对内存进行操作。</strong></p>
 <p>步骤2.2 把线程1的状态保存到PCB(内存)</p>
 <p>我们到底要保存线程的哪些信息呢？</p>
 <p>一个线程在运行时的内存模型主要有5个部分组成：</p>
@@ -569,6 +570,9 @@
   <ul class="popular-posts">
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2021-04-01-分布式问题.html" rel="bookmark">分布式锁</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021-05-18-synchronized和lock原理.html" rel="bookmark">synchronized和lock原理</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2021-03-24-Mysql中锁的相关问题.html" rel="bookmark">Mysql中锁的相关问题</a></div>
@@ -620,8 +624,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021-03-18-java%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E7%9A%84Linux%E5%91%BD%E4%BB%A4.html" rel="prev" title="Java开发需掌握的常用Linux命令">
-                  <i class="fa fa-chevron-left"></i> Java开发需掌握的常用Linux命令
+                <a href="/2021-03-18-linux%E4%B8%8B%E6%9F%A5%E5%86%85%E5%AD%98%20%E5%92%8C%20cpu%E5%91%BD%E4%BB%A4.html" rel="prev" title="linux下查内存/cpu命令">
+                  <i class="fa fa-chevron-left"></i> linux下查内存/cpu命令
                 </a>
             </div>
             <div class="post-nav-item">
@@ -692,14 +696,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">375k</span>
+    <span title="站点总字数">387k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:41</span>
+    <span title="站点阅读时长">5:52</span>
   </span>
 </div><div class="footer-custom">
 

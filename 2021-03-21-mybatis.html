@@ -155,7 +155,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">73</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">77</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -165,7 +165,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">49</span></a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
@@ -250,7 +250,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">73</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -263,7 +263,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -293,7 +293,7 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2021-04-10-gc%E3%80%81oom.html" title="2021-04-10-gc、oom.html">gc类型、内存泄露和内存溢出</a>
+          <a href="/2021-05-18-synchronized%E5%92%8Clock%E5%8E%9F%E7%90%86.html" title="2021-05-18-synchronized和lock原理.html">synchronized和lock原理</a>
         </li>
     </ul>
   </div>
@@ -411,8 +411,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="1-mybatis-之数据库-include-refid-quot-xxxx-quot"><a href="#1-mybatis-之数据库-include-refid-quot-xxxx-quot" class="headerlink" title="1.mybatis 之数据库 include refid =&quot;xxxx&quot;"></a>1.mybatis 之数据库 include refid =&quot;xxxx&quot;</h3><p><include refid="Base_Column_List" > *<em>这个在MyBatis查询数据库的sql中经常会出现。它的在上面已经定义，作用相当于 * ，*</em></p>
-<p>*<em>Base_Column_List是固定的几个字段，而用</em>号的话会降低查询效率，因为后期数据库的字段会不断增加。**</p>
+        <h3 id="1-mybatis-之数据库-include-refid-quot-xxxx-quot"><a href="#1-mybatis-之数据库-include-refid-quot-xxxx-quot" class="headerlink" title="1.mybatis 之数据库 include refid =&quot;xxxx&quot;"></a>1.mybatis 之数据库 include refid =&quot;xxxx&quot;</h3><p><include refid="Base_Column_List" > 这个在MyBatis查询数据库的sql中经常会出现。它的在上面已经定义，作用相当于 * ，</p>
+<p>Base_Column_List是固定的几个字段，而用*号的话会降低查询效率，因为后期数据库的字段会不断增加。</p>
 <p><sql>用来封装SQL语句, <include>来调用</p>
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;sql id=&quot;KjRealFeeDetail_columns&quot;&gt;</span><br><span class="line">        fd.id,fd.wj_code,fd.supplier_name,realfd.buss_id,DATE_FORMAT(fd.fee_time,&#x27;%Y-%m-%d&#x27;) fee_time,</span><br><span class="line">        fd.fee_amount loan_amount,fd.charge_amount,realfd.charge_amount real_charge_amount,</span><br><span class="line">        realfd.outer_dp_charge_amount real_outer_dp_charge_amount,realfd.outer_sc_charge_amount real_outer_sc_charge_amount</span><br><span class="line">    &lt;/sql&gt;</span><br></pre></td></tr></table></figure>
 
@@ -503,13 +503,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021-03-20-jsp%E3%80%81servlet%20%E5%92%8C%20spring%20MVC%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98.html" rel="prev" title="jsp、servlet 和 spring MVC的一些问题">
-                  <i class="fa fa-chevron-left"></i> jsp、servlet 和 spring MVC的一些问题
+                <a href="/2021-03-19-jdbc%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5.html" rel="prev" title="jdbc数据库连接">
+                  <i class="fa fa-chevron-left"></i> jdbc数据库连接
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021-03-22-mysql%E7%9A%84%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%8E%9F%E7%90%86%E5%92%8C%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB.html" rel="next" title="mysql的主从复制原理和读写分离">
-                  mysql的主从复制原理和读写分离 <i class="fa fa-chevron-right"></i>
+                <a href="/2021-03-20-jsp%E3%80%81servlet%20%E5%92%8C%20spring%20MVC%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98.html" rel="next" title="jsp、servlet 和 spring MVC的一些问题">
+                  jsp、servlet 和 spring MVC的一些问题 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -575,14 +575,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">375k</span>
+    <span title="站点总字数">387k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:41</span>
+    <span title="站点阅读时长">5:52</span>
   </span>
 </div><div class="footer-custom">
 
