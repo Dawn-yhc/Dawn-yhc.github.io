@@ -38,27 +38,6 @@
   </entry>
   
   <entry>
-    <title>SpinLockDemo 自旋锁</title>
-    <link href="https://yuhaicheng.xyz/2021-04-12-SpinLockDemo%20%E8%87%AA%E6%97%8B%E9%94%81.html"/>
-    <id>https://yuhaicheng.xyz/2021-04-12-SpinLockDemo%20%E8%87%AA%E6%97%8B%E9%94%81.html</id>
-    <published>2021-04-11T04:15:14.000Z</published>
-    <updated>2021-03-25T03:05:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.company;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.TimeUnit;</span><br><span class="line">import java.util.concurrent.atomic.AtomicReference;</span><br><span class="line"></span><br><span class="line">public class SpinLockDemo &#123;</span><br><span class="line">    &#x2F;&#x2F;原子引用线程</span><br><span class="line">    AtomicReference&lt;Thread&gt; atomicReference &#x3D; new AtomicReference();</span><br><span class="line"></span><br><span class="line">    public void myLock()&#123;</span><br><span class="line">        Thread thread &#x3D; Thread.currentThread();</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+&quot;\t come in&quot;);</span><br><span class="line">        while ( !atomicReference.compareAndSet(null,thread))&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public void myUnLock()&#123;</span><br><span class="line">        Thread thread &#x3D; Thread.currentThread();</span><br><span class="line">        atomicReference.compareAndSet(thread,null);</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+&quot;\t involed myUnLock&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        SpinLockDemo spinLockDemo &#x3D; new SpinLockDemo();</span><br><span class="line"></span><br><span class="line">        new Thread(() -&gt; &#123;</span><br><span class="line">            spinLockDemo.myLock();</span><br><span class="line">            try &#123; TimeUnit.SECONDS.sleep(5);&#125;catch (InterruptedException e)&#123;e.printStackTrace();&#125;</span><br><span class="line">            spinLockDemo.myUnLock();</span><br><span class="line">        &#125;,&quot;A&quot;).start();</span><br><span class="line"></span><br><span class="line">        try &#123; TimeUnit.SECONDS.sleep(1);&#125;catch (InterruptedException e)&#123;e.printStackTrace();&#125;</span><br><span class="line"></span><br><span class="line">        new Thread(() -&gt; &#123;</span><br><span class="line">            spinLockDemo.myLock();</span><br><span class="line">            try &#123; TimeUnit.SECONDS.sleep(1);&#125;catch (InterruptedException e)&#123;e.printStackTrace();&#125;</span><br><span class="line">            spinLockDemo.myUnLock();</span><br><span class="line">        &#125;,&quot;B&quot;).start();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">A come in</span><br><span class="line">B come in</span><br><span class="line">A involed myUnLock</span><br><span class="line">B involed myUnLock</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-    <summary type="html"></summary>
-    
-    
-    
-    <category term="锁" scheme="https://yuhaicheng.xyz/categories/%E9%94%81/"/>
-    
-    
-    <category term="自旋锁" scheme="https://yuhaicheng.xyz/tags/%E8%87%AA%E6%97%8B%E9%94%81/"/>
-    
-  </entry>
-  
-  <entry>
     <title>ReadWriteLock 读共享写独占</title>
     <link href="https://yuhaicheng.xyz/2021-04-11-ReadWriteLock%20%E8%AF%BB%E5%85%B1%E4%BA%AB%E5%86%99%E7%8B%AC%E5%8D%A0.html"/>
     <id>https://yuhaicheng.xyz/2021-04-11-ReadWriteLock%20%E8%AF%BB%E5%85%B1%E4%BA%AB%E5%86%99%E7%8B%AC%E5%8D%A0.html</id>
@@ -76,6 +55,27 @@
     
     
     <category term="读共享" scheme="https://yuhaicheng.xyz/tags/%E8%AF%BB%E5%85%B1%E4%BA%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SpinLockDemo 自旋锁</title>
+    <link href="https://yuhaicheng.xyz/2021-04-12-SpinLockDemo%20%E8%87%AA%E6%97%8B%E9%94%81.html"/>
+    <id>https://yuhaicheng.xyz/2021-04-12-SpinLockDemo%20%E8%87%AA%E6%97%8B%E9%94%81.html</id>
+    <published>2021-04-11T04:15:14.000Z</published>
+    <updated>2021-03-25T03:05:11.000Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.company;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.TimeUnit;</span><br><span class="line">import java.util.concurrent.atomic.AtomicReference;</span><br><span class="line"></span><br><span class="line">public class SpinLockDemo &#123;</span><br><span class="line">    &#x2F;&#x2F;原子引用线程</span><br><span class="line">    AtomicReference&lt;Thread&gt; atomicReference &#x3D; new AtomicReference();</span><br><span class="line"></span><br><span class="line">    public void myLock()&#123;</span><br><span class="line">        Thread thread &#x3D; Thread.currentThread();</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+&quot;\t come in&quot;);</span><br><span class="line">        while ( !atomicReference.compareAndSet(null,thread))&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public void myUnLock()&#123;</span><br><span class="line">        Thread thread &#x3D; Thread.currentThread();</span><br><span class="line">        atomicReference.compareAndSet(thread,null);</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+&quot;\t involed myUnLock&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        SpinLockDemo spinLockDemo &#x3D; new SpinLockDemo();</span><br><span class="line"></span><br><span class="line">        new Thread(() -&gt; &#123;</span><br><span class="line">            spinLockDemo.myLock();</span><br><span class="line">            try &#123; TimeUnit.SECONDS.sleep(5);&#125;catch (InterruptedException e)&#123;e.printStackTrace();&#125;</span><br><span class="line">            spinLockDemo.myUnLock();</span><br><span class="line">        &#125;,&quot;A&quot;).start();</span><br><span class="line"></span><br><span class="line">        try &#123; TimeUnit.SECONDS.sleep(1);&#125;catch (InterruptedException e)&#123;e.printStackTrace();&#125;</span><br><span class="line"></span><br><span class="line">        new Thread(() -&gt; &#123;</span><br><span class="line">            spinLockDemo.myLock();</span><br><span class="line">            try &#123; TimeUnit.SECONDS.sleep(1);&#125;catch (InterruptedException e)&#123;e.printStackTrace();&#125;</span><br><span class="line">            spinLockDemo.myUnLock();</span><br><span class="line">        &#125;,&quot;B&quot;).start();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">A come in</span><br><span class="line">B come in</span><br><span class="line">A involed myUnLock</span><br><span class="line">B involed myUnLock</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html"></summary>
+    
+    
+    
+    <category term="锁" scheme="https://yuhaicheng.xyz/categories/%E9%94%81/"/>
+    
+    
+    <category term="自旋锁" scheme="https://yuhaicheng.xyz/tags/%E8%87%AA%E6%97%8B%E9%94%81/"/>
     
   </entry>
   
